@@ -1,0 +1,4 @@
+.ccls*
+valgrind*
+*.out
+*.sh
