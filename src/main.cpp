@@ -3,25 +3,29 @@
 #include "Deck.h"
 #include "PlayerClient.h"
 #include "PlayerPerson.h"
-
+#include "GameLoop.h"
 
 int main(){
-	Deck deck = Deck();
-	deck.PrepareDeck();
 	
-	PlayerClient client = PlayerClient(&deck);
-	PlayerPerson person = PlayerPerson(&client);
+	PlayerPerson player = PlayerPerson();
+	PlayerPerson player2 = PlayerPerson();
 
-	std::cout<<"Game ready"<<std::endl;
-	while(true){
-		person.AwaitCommand();
-		std::cout<<std::endl<<std::endl<<"deck: "<<std::endl;
-		deck.PrintDeck();
-		std::cout<<std::endl<<std::endl<<"hand: "<<std::endl;
-		person.PrintHand();
-		std::cout<<std::endl<<std::endl<<"used: "<<std::endl;
-		deck.PrintAllUsed();
-	}
+	Deck deck = Deck();
+	GameLoop loop = GameLoop(&deck);
+
+	deck.PrepareDeck();
+	deck.ShuffleDeck();
+
+	loop.AddPlayer(&player);
+	loop.AddPlayer(&player2);
+
+	player.SetLoop(&loop);
+	player.SetDeck(&deck);
+	player2.SetLoop(&loop);
+	player2.SetDeck(&deck);
+	
+	std::cout<<"Game started"<<std::endl;
+	loop.CurTurn();
 	
 
 	return 0;

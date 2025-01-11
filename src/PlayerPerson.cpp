@@ -1,33 +1,34 @@
 #include "PlayerPerson.h"
 
-PlayerPerson::PlayerPerson(PlayerClient* _client){
-	client = _client;
+PlayerPerson::PlayerPerson(GameLoop* _loop){
+	loop = _loop;
 }
-void PlayerPerson::SetClient(PlayerClient *_client){
-	client = _client;
+
+void PlayerPerson::SetLoop(GameLoop *_loop){
+	loop = _loop;
+}
+
+void PlayerPerson::OnTurn(){
+	std::cout<<"Player on turn event"<<std::endl;
+	std::cout<<"Current hand"<<std::endl;
+	PrintHand();
+	AwaitCommand();
 }
 
 void PlayerPerson::PrintCard(int id){
-	if(id>=client->GetCards().size() || id<0){
+	if(id>=onHand.size() || id<0){
 		return;
 	}
-	Card* card = client->GetCards()[id];
+	Card* card = onHand[id];
 	std::string suit = translate::suit::EN(card->GetSuit());
 	std::string name = translate::name::EN(card->GetName());
 
 	std::cout<<name<<" of "<<suit<<std::endl;
 }
 void PlayerPerson::PrintHand(){
-	for(int i=0; i<client->GetCards().size(); i++){
+	for(int i=0; i<onHand.size(); i++){
 		PrintCard(i);
 	}
-}
-
-void PlayerPerson::DrawCard(){
-	client->DrawCard();
-}
-void PlayerPerson::PlayCard(int id){
-	client->PlayCard(id);
 }
 
 void PlayerPerson::SendCommand(std::string command){
@@ -37,17 +38,20 @@ void PlayerPerson::SendCommand(std::string command){
 		return;
 	}
 	if(formatedCommand[0] == "play"){
-		if(formatedCommand.size()<=1 || formatedCommand[1] != std::to_string(std::stoi(formatedCommand[1])) || std::stoi(formatedCommand[1])<0 || std::stoi(formatedCommand[1])>=client->GetCards().size()){
+		if(formatedCommand.size()<=1 || formatedCommand[1] != std::to_string(std::stoi(formatedCommand[1])) || std::stoi(formatedCommand[1])<0 || std::stoi(formatedCommand[1])>=onHand.size()){
 			return;
 		}
 		PlayCard(std::stoi(formatedCommand[1]));
+		loop->NextTurn();
+		
 	}
 	else if(formatedCommand[0] == "draw"){
 		DrawCard();
+		loop->NextTurn();
 	}
-	// || id!=std::stoi(std::to_string(id))
 }
 void PlayerPerson::AwaitCommand(){
+	std::cout<<"Command: ";
 	std::string command;
 	getline(std::cin, command);
 	SendCommand(command);

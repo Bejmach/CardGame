@@ -8,17 +8,17 @@
 #include "Deck.h"
 
 class PlayerClient{
-	
-	private:
+	protected:
 		std::vector<Card*> onHand;
 		Deck* deck;
 
 	public:
+		virtual void OnTurn() = 0;
+
 		PlayerClient(Deck* _deck = nullptr);
 
 		void SetDeck(Deck* _deck);
 
-		std::vector<Card*> GetCards();
 		void DrawCard();
 		void PlayCard(int id);
 

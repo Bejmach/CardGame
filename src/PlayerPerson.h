@@ -6,21 +6,22 @@
 #include "PlayerClient.h"
 #include "CardTranslator.h"
 #include "StringOperations.h"
+#include "GameLoop.h"
 
-class PlayerPerson{
+class PlayerPerson : public PlayerClient{
 	
 	private:
-		PlayerClient* client;
+		GameLoop* loop;
 
 	public:
-		PlayerPerson(PlayerClient* _client = nullptr);
-		void SetClient(PlayerClient* _client);
+		void OnTurn() override;
+
+		PlayerPerson(GameLoop* _loop = nullptr);
+
+		void SetLoop(GameLoop* _loop);
 
 		void PrintCard(int id);
 		void PrintHand();
-
-		void PlayCard(int id);
-		void DrawCard();
 
 		void SendCommand(std::string command);
 		void AwaitCommand();
