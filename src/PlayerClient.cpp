@@ -7,11 +7,6 @@ void PlayerClient::SetDeck(Deck *_deck){
 	deck = _deck;
 }
 
-
-std::vector<Card*> PlayerClient::GetCards(){
-	return onHand;
-}
-
 void PlayerClient::DrawCard(){
 	onHand.push_back(deck->TakeCard());
 }
@@ -25,4 +20,6 @@ void PlayerClient::PlayCard(int id){
 		onHand[i] = onHand[i+1];
 	}
 	onHand.resize(onHand.size()-1);
+
+
 }

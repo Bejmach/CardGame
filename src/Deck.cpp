@@ -104,9 +104,9 @@ void Deck::DEBUGThrowAway(int howMutch){
 		UseCard(TakeCard());
 	}
 }
-int Deck::DEBUGDeckSize(){
+int Deck::DeckSize(){
 	return deck.size();
 }
-int Deck::DEBUGUsedSize(){
+int Deck::UsedSize(){
 	return usedCards.size();
 }
