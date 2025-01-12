@@ -4,21 +4,17 @@
 #include "CardTypes.h"
 
 namespace raw{
-	namespace suit{
-		int EN(Suits suit);
-		int PL(Suits suit);
-	}
-	namespace name{
-		int EN(Names name);
-		int PL(Names name);
-	}
+	int suit(Suits suit);
+	int name(Names name);
 }
 namespace translate{
 	namespace suit{
+		std::string Code(Suits suit);
 		std::string EN(Suits suit);
 		std::string PL(Suits suit);
 	}
 	namespace name{
+		std::string Code(Names name);
 		std::string EN(Names name);
 		std::string PL(Names name);
 	}
