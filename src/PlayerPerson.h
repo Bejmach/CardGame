@@ -4,7 +4,7 @@
 #include "iostream"
 
 #include "PlayerClient.h"
-#include "CardTranslator.h"
+
 #include "StringOperations.h"
 #include "GameLoop.h"
 
@@ -20,10 +20,7 @@ class PlayerPerson : public PlayerClient{
 
 		void SetLoop(GameLoop* _loop);
 
-		void PrintCard(int id);
-		void PrintHand();
-
-		void SendCommand(std::string command);
+		bool SendCommand(std::string command);
 		void AwaitCommand();
 };
 

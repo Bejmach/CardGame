@@ -24,8 +24,8 @@ class Deck{
 		void PrintAllUsed();
 		void PrintUsed(int id);	
 
-		std::vector<Card*> ShowDeck();
-		std::vector<Card*> ShowUsed();
+		std::vector<Card*> GetDeck();
+		std::vector<Card*> GetUsed();
 
 		//ToDo
 		//Abstract for TakeCard, and create derived class for macao deck
@@ -35,8 +35,7 @@ class Deck{
 		int DeckSize();
 		int UsedSize();
 
-		//Debug functions to test the functionality to other functions, from within singular object
-		void DEBUGThrowAway(int howMutch);
+		void ThrowAway(int howMutch);
 		
 };
 

@@ -12,10 +12,15 @@ int main(){
 
 	Deck deck = Deck();
 	GameLoop loop = GameLoop(&deck);
+	Validator validator = Validator();
+
+	validator.SetDeck(&deck);
+	validator.SetMode(GameModes::makao);
 
 	deck.PrepareDeck();
 	deck.ShuffleDeck();
-
+	
+	loop.SetValidator(&validator);
 	loop.AddPlayer(&player);
 	loop.AddPlayer(&player2);
 
@@ -23,8 +28,12 @@ int main(){
 	player.SetDeck(&deck);
 	player2.SetLoop(&loop);
 	player2.SetDeck(&deck);
+
+	loop.PrepareGame(GameModes::makao);
+
+	loop.PrintCurGameState();
 	
-	std::cout<<"Game started"<<std::endl;
+	std::cout<<std::endl<<"Game started"<<std::endl;
 	loop.CurTurn();
 	
 

@@ -14,45 +14,47 @@ void PlayerPerson::OnTurn(){
 	PrintHand();
 	AwaitCommand();
 }
-
-void PlayerPerson::PrintCard(int id){
-	if(id>=onHand.size() || id<0){
-		return;
-	}
-	Card* card = onHand[id];
-	std::string suit = translate::suit::EN(card->GetSuit());
-	std::string name = translate::name::EN(card->GetName());
-
-	std::cout<<name<<" of "<<suit<<std::endl;
-}
-void PlayerPerson::PrintHand(){
-	for(int i=0; i<onHand.size(); i++){
-		PrintCard(i);
-	}
-}
-
-void PlayerPerson::SendCommand(std::string command){
+bool PlayerPerson::SendCommand(std::string command){
 	std::vector<std::string> formatedCommand = SO::Split(command, " ");
 
 	if(formatedCommand.size()<=0){
-		return;
+		return false;
 	}
 	if(formatedCommand[0] == "play"){
-		if(formatedCommand.size()<=1 || formatedCommand[1] != std::to_string(std::stoi(formatedCommand[1])) || std::stoi(formatedCommand[1])<0 || std::stoi(formatedCommand[1])>=onHand.size()){
-			return;
+		if(formatedCommand.size()<=1 || formatedCommand[1] != std::to_string(std::stoi(formatedCommand[1]))){
+			std::cout<<"wrong command"<<std::endl;
+			return false;
 		}
+		Card* card = GetCard(std::stoi(formatedCommand[1]));
+		
+		if(card==nullptr){
+			std::cout<<"card out of range"<<std::endl;
+			return false;
+		}
+		if(!loop->ValidateMove(card)){
+			std::cout<<"wrong move"<<std::endl;
+			return false;
+		}
+
 		PlayCard(std::stoi(formatedCommand[1]));
-		loop->NextTurn();
 		
 	}
 	else if(formatedCommand[0] == "draw"){
 		DrawCard();
-		loop->NextTurn();
 	}
+	return true;
 }
 void PlayerPerson::AwaitCommand(){
 	std::cout<<"Command: ";
 	std::string command;
 	getline(std::cin, command);
-	SendCommand(command);
+	bool correctCommand = SendCommand(command);
+	while(!correctCommand){
+		std::cout<<"Provided incorrect command, try again"<<std::endl;
+		std::cout<<"Command: ";
+		std::string command;
+		getline(std::cin, command);
+		correctCommand = SendCommand(command);
+	}
+	loop->NextTurn();
 }
