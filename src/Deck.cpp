@@ -94,8 +94,7 @@ void Deck::UseCard(Card *card){
 }
 
 
-//Debug functions to test the functionality to other functions, from within singular object
-void Deck::DEBUGThrowAway(int howMutch){
+void Deck::ThrowAway(int howMutch){
 	if(howMutch>deck.size()){
 		howMutch = deck.size();
 		return;
@@ -104,9 +103,16 @@ void Deck::DEBUGThrowAway(int howMutch){
 		UseCard(TakeCard());
 	}
 }
-int Deck::DEBUGDeckSize(){
+int Deck::DeckSize(){
 	return deck.size();
 }
-int Deck::DEBUGUsedSize(){
+int Deck::UsedSize(){
 	return usedCards.size();
+}
+
+std::vector<Card*> Deck::GetDeck(){
+	return deck;
+}
+std::vector<Card*> Deck::GetUsed(){
+	return usedCards;
 }
