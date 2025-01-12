@@ -15,9 +15,10 @@ class Validator{
 		bool ValidateMakao(Card* card);
 
 	public:
-		Validator(GameModes _mode = GameModes::makao);
+		Validator(Deck* deck = nullptr, GameModes _mode = GameModes::makao);
 
 		void SetMode(GameModes _mode);
+		void SetDeck(Deck* _deck);
 
 		void ForceSuit(Suits suit);
 		void ForceName(Names name);

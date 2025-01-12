@@ -1,11 +1,15 @@
 #include "Validator.h"
 
-Validator::Validator(GameModes _mode){
+Validator::Validator(Deck* _deck, GameModes _mode){
 	mode = _mode;
+	deck = _deck;
 }
 
 void Validator::SetMode(GameModes _mode){
 	_mode = mode;
+}
+void Validator::SetDeck(Deck *_deck){
+	deck = _deck;
 }
 
 void Validator::ForceName(Names name){
@@ -29,7 +33,7 @@ bool Validator::ValidateMakao(Card* card){
 		return false;
 	}
 	else{
-		Card* lastCard = deck->ShowUsed()[deck->UsedSize()-1];
+		Card* lastCard = deck->GetUsed()[deck->UsedSize()-1];
 		if(lastCard->GetName() == card->GetName() || lastCard->GetSuit() == card->GetSuit()){
 			return true;
 		}

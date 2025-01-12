@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Card.h"
+#include "CardTranslator.h"
 #include "Deck.h"
 
 class PlayerClient{
@@ -19,6 +20,10 @@ class PlayerClient{
 
 		void SetDeck(Deck* _deck);
 
+		void PrintCard(int id);
+		void PrintHand();
+
+		Card* GetCard(int id);
 		void DrawCard();
 		void PlayCard(int id);
 

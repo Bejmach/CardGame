@@ -1,4 +1,5 @@
 .ccls*
 valgrind*
+vgcore*
 *.out
 *.sh
