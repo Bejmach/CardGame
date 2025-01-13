@@ -9,8 +9,15 @@ GameLoop::GameLoop(Deck* _deck, Validator* _validator){
 void GameLoop::AddPlayer(PlayerClient *client){
 	clients.push_back(client);
 }
+int GameLoop::PlayerNumber(){
+	return clients.size();
+}
 
 void GameLoop::PrepareGame(GameModes mode){
+	for(int i=0; i<clients.size(); i++){
+		clients[i]->SetDeck(deck);
+	}
+
 	if(mode == GameModes::makao){
 		for(int i=0; i<5; i++){
 			for(int j=0; j<clients.size(); j++){
@@ -24,6 +31,9 @@ void GameLoop::PrepareGame(GameModes mode){
 	}
 }
 
+void GameLoop::StartGame(){
+	CurTurn();
+}
 void GameLoop::CurTurn(){
 	std::cout<<"Player turn "<<playerTurn<<std::endl;
 	clients[playerTurn]->OnTurn();

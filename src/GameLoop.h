@@ -20,6 +20,7 @@ class GameLoop{
 	public:
 		GameLoop(Deck* _deck = nullptr, Validator* _validator = nullptr);
 
+		void StartGame();
 		void CurTurn();
 		void NextTurn();
 
@@ -32,6 +33,7 @@ class GameLoop{
 		void SetValidator(Validator* _validator);
 
 		void AddPlayer(PlayerClient* client);
+		int PlayerNumber();
 
 		void PrintCurGameState();
 };
