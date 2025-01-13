@@ -4,10 +4,11 @@
 #include "PlayerClient.h"
 #include "PlayerPerson.h"
 #include "GameLoop.h"
+#include "GameMaster.h"
 
 int main(){
 	
-	PlayerPerson player = PlayerPerson();
+	/*PlayerPerson player = PlayerPerson();
 	PlayerPerson player2 = PlayerPerson();
 
 	Deck deck = Deck();
@@ -34,8 +35,24 @@ int main(){
 	loop.PrintCurGameState();
 	
 	std::cout<<std::endl<<"Game started"<<std::endl;
-	loop.CurTurn();
+	loop.CurTurn();*/
+
+	GameMaster master = GameMaster(GameModes::makao);
 	
+	PlayerPerson player = PlayerPerson();
+	PlayerPerson player2 = PlayerPerson();
+
+	player.SetLoop(master.GetLoop());
+	player2.SetLoop(master.GetLoop());
+
+	master.AddPlayer(&player);
+	master.AddPlayer(&player2);
+
+	master.StartGame();
+
+	master.PrepareGame();
+
+	master.StartGame();
 
 	return 0;
 }

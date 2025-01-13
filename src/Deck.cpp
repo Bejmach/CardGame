@@ -56,10 +56,10 @@ void Deck::ShuffleDeck(){
 }
 
 void Deck::PrintCard(int id){
-	std::string name = translate::name::EN(deck[id]->GetName());
-	std::string suit = translate::suit::EN(deck[id]->GetSuit());
+	std::string name = translate::name::Code(deck[id]->GetName());
+	std::string suit = translate::suit::Code(deck[id]->GetSuit());
 
-	std::cout<<name<<" of "<<suit<<std::endl;
+	std::cout<<name<<suit<<std::endl;
 }
 void Deck::PrintDeck(){
 	for(int i=0; i<deck.size(); i++){
@@ -68,10 +68,10 @@ void Deck::PrintDeck(){
 }
 
 void Deck::PrintUsed(int id){
-	std::string name = translate::name::EN(usedCards[id]->GetName());
-	std::string suit = translate::suit::EN(usedCards[id]->GetSuit());
+	std::string name = translate::name::Code(usedCards[id]->GetName());
+	std::string suit = translate::suit::Code(usedCards[id]->GetSuit());
 
-	std::cout<<name<<" of "<<suit<<std::endl;
+	std::cout<<name<<suit<<std::endl;
 }
 void Deck::PrintAllUsed(){
 	for(int i=0; i<usedCards.size(); i++){

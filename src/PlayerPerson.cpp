@@ -10,6 +10,10 @@ void PlayerPerson::SetLoop(GameLoop *_loop){
 
 void PlayerPerson::OnTurn(){
 	std::cout<<"Player on turn event"<<std::endl;
+
+	std::cout<<"Last used"<<std::endl;
+	deck->PrintUsed(deck->UsedSize()-1);
+
 	std::cout<<"Current hand"<<std::endl;
 	PrintHand();
 	AwaitCommand();

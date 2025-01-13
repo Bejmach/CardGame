@@ -37,10 +37,10 @@ void PlayerClient::PrintCard(int id){
 		return;
 	}
 	Card* card = onHand[id];
-	std::string suit = translate::suit::EN(card->GetSuit());
-	std::string name = translate::name::EN(card->GetName());
+	std::string suit = translate::suit::Code(card->GetSuit());
+	std::string name = translate::name::Code(card->GetName());
 
-	std::cout<<name<<" of "<<suit<<std::endl;
+	std::cout<<name<<suit<<std::endl;
 }
 void PlayerClient::PrintHand(){
 	for(int i=0; i<onHand.size(); i++){
