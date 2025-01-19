@@ -27,6 +27,9 @@ class Deck{
 		std::vector<Card*> GetDeck();
 		std::vector<Card*> GetUsed();
 
+		Card* GetLastDeck();
+		Card* GetLastUsed();
+
 		//ToDo
 		//Abstract for TakeCard, and create derived class for macao deck
 		Card* TakeCard();

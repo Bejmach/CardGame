@@ -11,6 +11,15 @@ void PlayerPerson::SetLoop(GameLoop *_loop){
 void PlayerPerson::OnTurn(){
 	std::cout<<"Player on turn event"<<std::endl;
 
+	if(skipTurn){
+		std::cout<<"Turn skipped"<<std::endl;
+		turnsSkipped-=1;
+		if(turnsSkipped<=0){
+			skipTurn = false;
+		}
+		loop->NextTurn();
+	}
+
 	std::cout<<"Last used"<<std::endl;
 	deck->PrintUsed(deck->UsedSize()-1);
 
@@ -29,24 +38,31 @@ bool PlayerPerson::SendCommand(std::string command){
 			std::cout<<"wrong command"<<std::endl;
 			return false;
 		}
-		Card* card = GetCard(std::stoi(formatedCommand[1]));
-		
+		Card* card = GetCard(std::stoi(formatedCommand[1])-1);
+		std::string flags = "";
+
+		if(formatedCommand.size()>2){
+			flags = formatedCommand[2];
+		}
+
 		if(card==nullptr){
 			std::cout<<"card out of range"<<std::endl;
 			return false;
 		}
-		if(!loop->ValidateMove(card)){
+		if(!loop->ValidateMove(card, flags)){
 			std::cout<<"wrong move"<<std::endl;
 			return false;
 		}
 
-		PlayCard(std::stoi(formatedCommand[1]));
+		PlayCard(std::stoi(formatedCommand[1])-1);
+		return true;
 		
 	}
 	else if(formatedCommand[0] == "draw"){
 		DrawCard();
+		return true;
 	}
-	return true;
+	return false;
 }
 void PlayerPerson::AwaitCommand(){
 	std::cout<<"Command: ";

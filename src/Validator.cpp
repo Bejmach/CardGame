@@ -1,50 +1,6 @@
 #include "Validator.h"
 
-Validator::Validator(Deck* _deck, GameModes _mode){
-	mode = _mode;
+Validator::Validator(Deck* _deck, SpecialRules* _sr){
 	deck = _deck;
+	sr = _sr;
 }
-
-void Validator::SetMode(GameModes _mode){
-	_mode = mode;
-}
-void Validator::SetDeck(Deck *_deck){
-	deck = _deck;
-}
-
-void Validator::ForceName(Names name){
-	forceName = name;
-}
-void Validator::ForceSuit(Suits suit){
-	forceSuit = suit;
-}
-
-bool Validator::ValidateMakao(Card* card){
-	if(forceSuit==Suits::Undefined){
-		if(forceSuit == card->GetSuit()){
-			return true;
-		}
-		return false;
-	}
-	else if(forceName==Names::Undefined){
-		if(forceName == card->GetName()){
-			return true;
-		}
-		return false;
-	}
-	else{
-		Card* lastCard = deck->GetUsed()[deck->UsedSize()-1];
-		if(lastCard->GetName() == card->GetName() || lastCard->GetSuit() == card->GetSuit()){
-			return true;
-		}
-		return false;
-	}
-}
-
-bool Validator::Validate(Card *card){
-	if(mode == GameModes::makao){
-		return ValidateMakao(card);
-	}
-	return false;
-}
-

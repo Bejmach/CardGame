@@ -8,6 +8,8 @@
 
 int main(){
 	
+	srand(time(NULL));
+
 	/*PlayerPerson player = PlayerPerson();
 	PlayerPerson player2 = PlayerPerson();
 

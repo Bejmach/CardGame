@@ -2,28 +2,16 @@
 #define VALIDATOR_H
 
 #include "Deck.h"
-
-enum class GameModes{makao};
+#include "SpecialRules.h"
 
 class Validator{
-	private:
-		GameModes mode;
+	protected:
 		Deck* deck;
-		Suits forceSuit;
-		Names forceName;
-
-		bool ValidateMakao(Card* card);
+		SpecialRules* sr;
 
 	public:
-		Validator(Deck* deck = nullptr, GameModes _mode = GameModes::makao);
-
-		void SetMode(GameModes _mode);
-		void SetDeck(Deck* _deck);
-
-		void ForceSuit(Suits suit);
-		void ForceName(Names name);
-
-		bool Validate(Card* card);
+		Validator(Deck* _deck = nullptr, SpecialRules* _sr = nullptr);
+		virtual void Validate(Card* card) = 0;
 };
 
 #endif

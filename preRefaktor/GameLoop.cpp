@@ -39,6 +39,12 @@ void GameLoop::CurTurn(){
 	clients[playerTurn]->OnTurn();
 }
 void GameLoop::NextTurn(){
+	//check if player won
+	if(validator->ValidateResult(clients[playerTurn])){
+		std::cout<<"Player "<<playerTurn<<" won the game."<<std::endl<<"Congratulation!!!"<<std::endl;
+		return;
+	}
+
 	playerTurn+=1;
 	if(playerTurn>=clients.size()){
 		playerTurn = 0;
@@ -49,8 +55,8 @@ void GameLoop::NextTurn(){
 	std::cout<<std::endl<<std::endl;
 	CurTurn();
 }
-bool GameLoop::ValidateMove(Card* card){
-	return validator->Validate(card);
+bool GameLoop::ValidateMove(Card* card, std::string flags){
+	return validator->Validate(card, flags);
 }
 
 void GameLoop::SetDeck(Deck *_deck){

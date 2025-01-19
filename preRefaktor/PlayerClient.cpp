@@ -11,6 +11,7 @@ void PlayerClient::DrawCard(){
 	onHand.push_back(deck->TakeCard());
 }
 void PlayerClient::PlayCard(int id){
+	
 	if(id>=onHand.size() || id<0){
 		return;
 	}
@@ -25,7 +26,6 @@ void PlayerClient::PlayCard(int id){
 }
 
 Card* PlayerClient::GetCard(int id){
-	std::cout<<id<<std::endl;
 	if(id<0 || id>=onHand.size()){
 		return nullptr;
 	}
@@ -46,4 +46,13 @@ void PlayerClient::PrintHand(){
 	for(int i=0; i<onHand.size(); i++){
 		PrintCard(i);
 	}
+}
+
+int PlayerClient::HandSize(){
+	return onHand.size();
+}
+
+void PlayerClient::SkipTurn(int howLong){
+	skipTurn = true;
+	turnsSkipped = howLong;
 }

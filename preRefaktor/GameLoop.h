@@ -27,7 +27,7 @@ class GameLoop{
 		//GameModes in Validator
 		void PrepareGame(GameModes mode);
 
-		bool ValidateMove(Card* card);
+		bool ValidateMove(Card* card, std::string flags);
 
 		void SetDeck(Deck* _deck);
 		void SetValidator(Validator* _validator);
