@@ -8,10 +8,10 @@
 #include <iostream>
 #include <vector>
 
-class PlayerClient{
+class ClientBase{
 	protected:
-		PlayerClient* lastPlayer;
-		PlayerClient* nextPlayer;
+		ClientBase* lastPlayer;
+		ClientBase* nextPlayer;
 
 		std::vector<Card*> onHand;
 		Deck* deck;
@@ -19,12 +19,12 @@ class PlayerClient{
 	public:
 		virtual void OnTurn() = 0;
 		
-		PlayerClient(Deck* _deck = nullptr);
+		ClientBase(Deck* _deck = nullptr);
 		
 		void SetDeck(Deck* _deck);
 
-		void SetLastPlayer(PlayerClient* player);
-		void SetNextPlayer(PlayerClient* player);
+		void SetLastPlayer(ClientBase* player);
+		void SetNextPlayer(ClientBase* player);
 
 		Card* GetCard(int id);
 		void DrawCard();

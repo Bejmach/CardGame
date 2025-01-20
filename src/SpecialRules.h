@@ -8,7 +8,7 @@ class SpecialRules{
 		
 	public:
 		virtual bool Validate(Card* card) = 0;
-		virtual void UpdatedOnCard(Card* card) = 0;
+		virtual void UpdateOnCard(Card* card) = 0;
 
 };
 

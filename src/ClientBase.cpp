@@ -1,31 +1,31 @@
-#include "PlayerClient.h"
+#include "ClientBase.h"
 
-PlayerClient::PlayerClient(Deck* _deck){
+ClientBase::ClientBase(Deck* _deck){
 	deck = _deck;
 }
 
-void PlayerClient::SetDeck(Deck *_deck){
+void ClientBase::SetDeck(Deck *_deck){
 	deck = _deck;
 }
 
-void PlayerClient::SetLastPlayer(PlayerClient *player){
+void ClientBase::SetLastPlayer(ClientBase *player){
 	lastPlayer = player;
 }
-void PlayerClient::SetNextPlayer(PlayerClient *player){
+void ClientBase::SetNextPlayer(ClientBase *player){
 	nextPlayer = player;
 }
 
-Card* PlayerClient::GetCard(int id){
+Card* ClientBase::GetCard(int id){
 	if(id<0 || id>=onHand.size()){
 		return nullptr;
 	}
 	return onHand[id];
 }
 
-void PlayerClient::DrawCard(){
+void ClientBase::DrawCard(){
 	onHand.push_back(deck->TakeCard());
 }
-void PlayerClient::PlayCard(int id){
+void ClientBase::PlayCard(int id){
 	Card* card = GetCard(id);
 	if(card==nullptr){
 		return;
@@ -39,6 +39,6 @@ void PlayerClient::PlayCard(int id){
 	onHand.resize(onHand.size()-1);
 }
 
-int PlayerClient::HandSize(){
+int ClientBase::HandSize(){
 	return onHand.size();
 }

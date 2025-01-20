@@ -9,10 +9,13 @@ class MakaoRules : public SpecialRules{
 		Names forceName = Names::Undefined;
 
 		int forceTime = 0;
-		int numberOfPlayer = 0;
+		int numberOfPlayer;
 
 	public:
+		MakaoRules(int playerCount = 0);
+
 		bool Validate(Card* card) override;
+		void UpdateOnCard(Card* card) override;
 };
 
 #endif

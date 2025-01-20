@@ -7,11 +7,14 @@
 class Validator{
 	protected:
 		Deck* deck;
-		SpecialRules* sr;
+		SpecialRules* rules;
 
 	public:
-		Validator(Deck* _deck = nullptr, SpecialRules* _sr = nullptr);
-		virtual void Validate(Card* card) = 0;
+		Validator(Deck* _deck = nullptr, SpecialRules* _rules = nullptr);
+		virtual bool Validate(Card* card) = 0;
+
+		void SetDeck(Deck* _deck);
+		void SetRules(SpecialRules* _rules);
 };
 
 #endif
