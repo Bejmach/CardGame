@@ -1,11 +1,15 @@
 #include "ClientBase.h"
 
-ClientBase::ClientBase(Deck* _deck){
+ClientBase::ClientBase(Deck* _deck, Validator* _validator){
 	deck = _deck;
+	validator = _validator;
 }
 
 void ClientBase::SetDeck(Deck *_deck){
 	deck = _deck;
+}
+void ClientBase::SetValidator(Validator* _validator){
+	validator = _validator;
 }
 
 void ClientBase::SetLastPlayer(ClientBase *player){

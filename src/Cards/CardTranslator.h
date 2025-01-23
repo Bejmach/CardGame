@@ -2,7 +2,7 @@
 #define CARDTRANSLATOR_H
 
 #include "CardTypes.h"
-#include "StringOperations.h"
+#include "../Other/StringOperations.h"
 #include "Card.h"
 
 

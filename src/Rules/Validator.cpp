@@ -1,8 +1,10 @@
 #include "Validator.h"
+#include "GameModes.h"
 
-Validator::Validator(Deck* _deck, SpecialRules* _rules){
+Validator::Validator(GameModes _mode, Deck* _deck, SpecialRules* _rules){
 	deck = _deck;
 	rules = _rules;
+	mode = _mode;
 }
 
 void Validator::SetDeck(Deck *_deck){
