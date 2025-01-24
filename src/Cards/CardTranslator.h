@@ -15,6 +15,7 @@ namespace raw{
 namespace translate{
 	namespace suit{
 		std::string Code(Suits suit);
+		std::string Codename(Suits suit);
 		std::string EN(Suits suit);
 		std::string PL(Suits suit);
 	}

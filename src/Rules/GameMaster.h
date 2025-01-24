@@ -6,6 +6,8 @@
 #include "SpecialRules.h"
 #include "../Cards/Deck.h"
 
+#include "../Other/Logger.h"
+
 #include "MakaoValidator.h"
 #include "MakaoRules.h"
 
@@ -20,6 +22,8 @@ class GameMaster{
 		Validator* validator = nullptr;
 		SpecialRules* rules = nullptr;
 		Deck* deck = nullptr;
+
+		Logger* logger = nullptr;
 
 		GameModes mode;
 

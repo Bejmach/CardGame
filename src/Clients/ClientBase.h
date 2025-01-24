@@ -5,6 +5,8 @@
 #include "../Cards/CardTranslator.h"
 #include "../Cards/Deck.h"
 
+#include "../Other/Logger.h"
+
 #include "../Rules/Validator.h"
 
 #include <iostream>
@@ -18,7 +20,11 @@ class ClientBase{
 		std::vector<Card*> onHand;
 		Deck* deck;
 
+		Logger* logger;
+
 		Validator* validator;
+
+		int playerId = 0;
 
 	public:
 		virtual void OnTurn() = 0;
@@ -28,6 +34,9 @@ class ClientBase{
 
 		void SetDeck(Deck* _deck);
 		void SetValidator(Validator* _validator);
+		void SetLogger(Logger* _logger);
+
+		void SetId(int _id);
 
 		void SetLastPlayer(ClientBase* player);
 		void SetNextPlayer(ClientBase* player);

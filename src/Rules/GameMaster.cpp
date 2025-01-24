@@ -18,6 +18,10 @@ GameMaster::~GameMaster(){
 		delete rules;
 		rules = nullptr;
 	}
+	if(logger != nullptr){
+		delete logger;
+		logger = nullptr;
+	}
 }
 
 void GameMaster::PrepareGame(){
@@ -33,11 +37,16 @@ void GameMaster::PrepareGame(){
 		delete rules;
 		rules = nullptr;
 	}
+	if(logger != nullptr){
+		delete logger;
+		logger = nullptr;
+	}
 	if(mode == GameModes::Makao){
 		deck = new Deck();
 		validator = new MakaoValidator();
 		rules = new MakaoRules();
 	}
+	logger = new Logger();
 
 	deck->PrepareDeck();
 	deck->ShuffleDeck();
@@ -59,6 +68,21 @@ void GameMaster::PrepareGame(){
 
 		clients[i]->SetDeck(deck);
 		clients[i]->SetValidator(validator);
+
+		clients[i]->SetLogger(logger);
+		clients[i]->SetId(i);
+	}
+
+	if(mode == GameModes::Makao){
+		for(int i=0; i<5; i++){
+			for(int j=0; j<clients.size(); j++){
+				clients[j]->DrawCard();
+			}
+		}
+		deck->ThrowAway(1);
+		while(deck->GetLastUsed()->GetName()!=Names::Two && deck->GetLastUsed()->GetName()!=Names::Three && deck->GetLastUsed()->GetName()!=Names::Four && deck->GetLastUsed()->GetName()!=Names::Jack && deck->GetLastUsed()->GetName()!=Names::Ace){
+			deck->ThrowAway(1);
+		}
 	}
 
 	prepared = true;
@@ -74,5 +98,10 @@ void GameMaster::StartGame(){
 		std::cout<<"Can't start before preparing the game"<<std::endl;
 		return;
 	}
+
+	
+
 	clients[0]->OnTurn();
+
+	logger->Save();
 }

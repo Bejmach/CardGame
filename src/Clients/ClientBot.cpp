@@ -18,11 +18,11 @@ void ClientBot::OnTurn(){
         }
     }
 
-    if(highest == 0){
-        DrawCard();
+    if(highest != 0){
+        PlayCard(id);
     }
     else{
-        PlayCard(id);
+        DrawCard();
     }
 
     if(validator->ValidateEnd(onHand)){

@@ -11,6 +11,9 @@ int raw::name(Names name){
 std::string translate::suit::Code(Suits suit){
 	return SuitsCode[static_cast<int>(suit)];
 }
+std::string translate::suit::Codename(Suits suit){
+	return SuitsCodename[static_cast<int>(suit)];
+}
 std::string translate::suit::EN(Suits suit){
 	return SuitsEN[static_cast<int>(suit)];
 }

@@ -41,11 +41,9 @@ std::vector<int> MakaoValidator::CardValues(std::vector<Card*> cards){
 	for(int i=0; i<cards.size(); i++){
 		if(!Validate(cards[i])){
 			cardValues[i] = -1;
-			continue;
 		}
-		if(cardSuits[cards[i]->GetRawSuit()] == 1){
+		else if(cardSuits[cards[i]->GetRawSuit()] == 1){
 			cardValues[i] = 3;
-			continue;
 		}
 		else if(cards[i]->GetName() == Names::Ace || cards[i]->GetName() == Names::Jack || cards[i]->GetName() == Names::Two || cards[i]->GetName() == Names::Three || cards[i]->GetName() == Names::Four){
 			cardValues[i] = 2;

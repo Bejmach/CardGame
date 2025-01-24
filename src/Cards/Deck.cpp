@@ -83,7 +83,10 @@ Card* Deck::GetLastDeck(){
 	return deck[deck.size()-1];
 }
 Card* Deck::GetLastUsed(){
-	return deck[deck.size()-1];
+	if(usedCards.size()<1){
+		return nullptr;
+	}
+	return usedCards[usedCards.size()-1];
 }
 
 Card* Deck::TakeCard(){

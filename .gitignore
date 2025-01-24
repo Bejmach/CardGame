@@ -3,3 +3,4 @@ valgrind*
 vgcore*
 *.out
 *.sh
+*.txt

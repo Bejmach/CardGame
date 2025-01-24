@@ -11,6 +11,13 @@ void ClientBase::SetDeck(Deck *_deck){
 void ClientBase::SetValidator(Validator* _validator){
 	validator = _validator;
 }
+void ClientBase::SetLogger(Logger* _logger){
+	logger = _logger;
+}
+
+void ClientBase::SetId(int _id){
+	playerId = _id;
+}
 
 void ClientBase::SetLastPlayer(ClientBase *player){
 	lastPlayer = player;
@@ -27,14 +34,39 @@ Card* ClientBase::GetCard(int id){
 }
 
 void ClientBase::DrawCard(){
-	onHand.push_back(deck->TakeCard());
+	Card* card = deck->TakeCard();
+	onHand.push_back(card);
+
+	std::string cardCode = translate::name::Code(card->GetName())+translate::suit::Codename(card->GetSuit());
+	std::string lastCode;
+	if(deck->GetLastUsed() == nullptr){
+		lastCode = "NULL";
+	}
+	else{
+		lastCode = translate::name::Code(deck->GetLastUsed()->GetName())+translate::suit::Codename(deck->GetLastUsed()->GetSuit());
+	}
+
+	logger->PushLog(std::to_string(playerId)+";D_"+ cardCode + " -- " + lastCode);
 }
 void ClientBase::PlayCard(int id){
 	Card* card = GetCard(id);
 	if(card==nullptr){
 		return;
 	}
+
+	std::string cardCode = translate::name::Code(card->GetName())+translate::suit::Codename(card->GetSuit());
+	std::string lastCode;
+	if(deck->GetLastUsed() == nullptr){
+		lastCode = "NULL";
+	}
+	else{
+		lastCode = translate::name::Code(deck->GetLastUsed()->GetName())+translate::suit::Codename(deck->GetLastUsed()->GetSuit());
+	}
+
+	logger->PushLog(std::to_string(playerId)+";P_"+ cardCode + " -> " + lastCode);
+
 	deck->UseCard(card);
+
 	onHand[id] = nullptr;
 
 	for(int i=id; i<onHand.size()-1; i++){

@@ -1,6 +1,7 @@
 #include "CardTypes.h"
 
 std::vector<std::string> SuitsCode = {"♥", "♦", "♣", "♠"};
+std::vector<std::string> SuitsCodename = {"H", "D", "C", "S"};
 std::vector<std::string> SuitsEN = {"Heart", "Diamond", "Club", "Spade"};
 std::vector<std::string> SuitsPL = {"Kier", "Karo", "Pik", "Trefl"};
 
