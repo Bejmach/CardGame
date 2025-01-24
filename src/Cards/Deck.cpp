@@ -79,6 +79,16 @@ void Deck::PrintAllUsed(){
 	}
 }
 
+Card* Deck::GetLastDeck(){
+	return deck[deck.size()-1];
+}
+Card* Deck::GetLastUsed(){
+	if(usedCards.size()<1){
+		return nullptr;
+	}
+	return usedCards[usedCards.size()-1];
+}
+
 Card* Deck::TakeCard(){
 	Card* pickedCard = deck[deck.size()-1];
 	deck.resize(deck.size()-1);

@@ -1,5 +1,8 @@
 #include "StringOperations.h"
 
+#include <algorithm>
+#include <cctype>
+
 std::vector<std::string> SO::Split(std::string str, std::string delimiter){
 	std::vector<std::string> holder;
 		int startPosition = 0;
@@ -16,4 +19,17 @@ std::vector<std::string> SO::Split(std::string str, std::string delimiter){
 		}
 	holder.push_back(str.substr(startPosition, endPosition-startPosition));
 	return holder;
+}
+
+std::string SO::ToLower(std::string str){
+	std::transform(str.begin(), str.end(), str.begin(),
+			[](unsigned char c){return std::tolower(c); });
+
+	return str;
+}
+std::string SO::ToUpper(std::string str){
+	std::transform(str.begin(), str.end(), str.begin(),
+			[](unsigned char c){return std::toupper(c); });
+
+	return str;
 }
