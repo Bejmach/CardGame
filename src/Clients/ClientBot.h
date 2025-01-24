@@ -11,6 +11,7 @@ class ClientBot : public ClientBase{
         ~ClientBot() override {};
 
         void OnTurn() override;
+        bool Step(bool first);
 };
 
 #endif
