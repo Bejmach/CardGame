@@ -1,8 +1,9 @@
 #include "ClientBase.h"
 
-ClientBase::ClientBase(Deck* _deck, Validator* _validator){
+ClientBase::ClientBase(Deck* _deck, Validator* _validator, SpecialRules* _rules){
 	deck = _deck;
 	validator = _validator;
+	rules = _rules;
 }
 
 void ClientBase::SetDeck(Deck *_deck){
@@ -10,6 +11,9 @@ void ClientBase::SetDeck(Deck *_deck){
 }
 void ClientBase::SetValidator(Validator* _validator){
 	validator = _validator;
+}
+void ClientBase::SetRules(SpecialRules* _rules){
+	rules = _rules;
 }
 void ClientBase::SetLogger(Logger* _logger){
 	logger = _logger;
@@ -49,11 +53,11 @@ void ClientBase::DrawCard(){
 	logger->PushLog(std::to_string(playerId)+";D_"+ cardCode + " -- " + lastCode);
 }
 void ClientBase::PlayCard(int id){
+
 	Card* card = GetCard(id);
 	if(card==nullptr){
 		return;
 	}
-
 	std::string cardCode = translate::name::Code(card->GetName())+translate::suit::Codename(card->GetSuit());
 	std::string lastCode;
 	if(deck->GetLastUsed() == nullptr){
@@ -66,6 +70,10 @@ void ClientBase::PlayCard(int id){
 	logger->PushLog(std::to_string(playerId)+";P_"+ cardCode + " -> " + lastCode);
 
 	deck->UseCard(card);
+
+	std::vector<bool> actions = rules->UpdateOnCard(card, playerId);
+
+	ChangeCard(actions);
 
 	onHand[id] = nullptr;
 

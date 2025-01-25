@@ -8,25 +8,33 @@
 
 
 
-namespace raw{
-	int suit(Suits suit);
-	int name(Names name);
-}
+
 namespace translate{
 	namespace suit{
 		std::string Code(Suits suit);
 		std::string Codename(Suits suit);
 		std::string EN(Suits suit);
 		std::string PL(Suits suit);
+		std::string Id(int id);
 	}
 	namespace name{
 		std::string Code(Names name);
 		std::string EN(Names name);
 		std::string PL(Names name);
+		std::string Id(int id);
+	}
+	namespace raw{
+		int Suit(Suits suit);
+		int Name(Names name);
 	}
 }
 namespace decode{
-	Card str(std::string str);
+	Card Str(std::string str);
+
+	namespace intiger{
+		Suits Suit(int suitCode);
+		Names Name(int nameCode);
+	}
 }
 
 #endif

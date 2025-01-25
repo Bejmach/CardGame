@@ -5,6 +5,8 @@
 
 #include "../Cards/CardTypes.h"
 
+#include "../Cards/CardTranslator.h"
+
 class MakaoRules : public SpecialRules{
 	private:
 		Suits forceSuit = Suits::Undefined;
@@ -13,12 +15,16 @@ class MakaoRules : public SpecialRules{
 		int forceTime = 0;
 		int numberOfPlayer;
 
+		int forcePlayerId = 0;
+
 	public:
-		MakaoRules(int playerCount = 0);
+		MakaoRules(GameModes _mode = GameModes::Makao, int playerCount = 0);
 		~MakaoRules() override {};
 
-		bool Validate(Card* card) override;
-		void UpdateOnCard(Card* card) override;
+		std::vector<bool> Validate(Card* card) override;
+		std::vector<bool> UpdateOnCard(Card *card, int playerId) override;
+
+		void CommandUpdate(std::string command) override;
 };
 
 #endif

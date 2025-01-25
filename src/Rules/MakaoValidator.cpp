@@ -3,10 +3,13 @@
 MakaoValidator::MakaoValidator(GameModes _mode, Deck* _deck, SpecialRules* _rules) : Validator(_mode, _deck, _rules){}
 
 bool MakaoValidator::Validate(Card* card, bool suit, bool name){
-	if(!rules->Validate(card)){
+	if(!rules->Validate(card)[0]){
 		return false;
 	}
-	if((card->GetSuit() == deck->GetLastUsed()->GetSuit() && suit ) || (card->GetName() == deck->GetLastUsed()->GetName() && name)){
+	else if(rules->Validate(card)[1]){
+		return true;
+	}
+	else if((card->GetSuit() == deck->GetLastUsed()->GetSuit() && suit ) || (card->GetName() == deck->GetLastUsed()->GetName() && name)/*SimpRules || card->GetName() == Names::Queen*/){
 		return true;
 	}
 	return false;

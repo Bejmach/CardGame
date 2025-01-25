@@ -11,6 +11,7 @@ class ClientBot : public ClientBase{
         ~ClientBot() override {};
 
         void OnTurn() override;
+        void ChangeCard(std::vector<bool>) override;
         bool Step(bool first);
 };
 

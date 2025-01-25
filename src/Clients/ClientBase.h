@@ -8,6 +8,7 @@
 #include "../Other/Logger.h"
 
 #include "../Rules/Validator.h"
+#include "../Rules/SpecialRules.h"
 
 #include <iostream>
 #include <vector>
@@ -23,17 +24,20 @@ class ClientBase{
 		Logger* logger;
 
 		Validator* validator;
+		SpecialRules* rules;
 
 		int playerId = 0;
 
 	public:
 		virtual void OnTurn() = 0;
+		virtual void ChangeCard(std::vector<bool>) = 0;
 		
-		ClientBase(Deck* _deck = nullptr, Validator* _validator = nullptr);
+		ClientBase(Deck* _deck = nullptr, Validator* _validator = nullptr, SpecialRules* _rules = nullptr);
 		virtual ~ClientBase() {};
 
 		void SetDeck(Deck* _deck);
 		void SetValidator(Validator* _validator);
+		void SetRules(SpecialRules* rules);
 		void SetLogger(Logger* _logger);
 
 		void SetId(int _id);

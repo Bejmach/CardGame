@@ -54,6 +54,8 @@ void GameMaster::PrepareGame(){
 	validator->SetDeck(deck);
 	validator->SetRules(rules);
 
+	rules->SetLogger(logger);
+
 	for(int i=0; i<clients.size(); i++){
 		int lastId = i-1;
 		if(lastId<=-1){
@@ -71,6 +73,8 @@ void GameMaster::PrepareGame(){
 
 		clients[i]->SetLogger(logger);
 		clients[i]->SetId(i);
+
+		clients[i]->SetRules(rules);
 	}
 
 	if(mode == GameModes::Makao){
