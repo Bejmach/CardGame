@@ -29,7 +29,7 @@ class ClientBase{
 		int playerId = 0;
 
 	public:
-		virtual void OnTurn() = 0;
+		virtual void OnTurn(bool _stopTurn, bool _drawCard, int _stopTurns, int _drawNumber) = 0;
 		virtual void ChangeCard(std::vector<bool>) = 0;
 		
 		ClientBase(Deck* _deck = nullptr, Validator* _validator = nullptr, SpecialRules* _rules = nullptr);

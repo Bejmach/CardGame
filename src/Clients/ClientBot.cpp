@@ -5,7 +5,7 @@ ClientBot::ClientBot(Deck* _deck, Validator* _validator){
     this->validator = _validator;
 }
 
-bool ClientBot::Step(bool first){
+bool ClientBot::Step(bool first, bool _stopTurn, bool _drawCard, int *stops, int *draws, bool* backshoot){
 
     bool suit = true;
     bool name = true;
@@ -14,7 +14,11 @@ bool ClientBot::Step(bool first){
         suit = false;
     }
 
-    std::vector<int> cardValues = validator->CardValues(onHand, suit, name);
+    if(_stopTurn){
+        suit = false;
+    }
+
+    std::vector<int> cardValues = validator->CardValues(onHand, suit, name, {*draws!=0});
 
     int id = 0;
     int highest = 0;
@@ -27,11 +31,30 @@ bool ClientBot::Step(bool first){
     }
 
     if(highest != 0){
+
+        if(onHand[id]->GetName() == Names::Two){
+            *draws += 2;
+        }
+        else if(onHand[id]->GetName() == Names::Three){
+            *draws += 3;
+        }
+        else if(onHand[id]->GetName() == Names::King){
+            if(onHand[id]->GetSuit() == Suits::Heart){
+                *draws += 5;
+            }
+            else if(onHand[id]->GetSuit() == Suits::Spade){
+                *draws += 5;
+                *backshoot = true;
+            }
+        }
+        else if(onHand[id]->GetName() == Names::Four){
+            *stops+=1;
+        }
+
         PlayCard(id);
         return true;
     }
     else if(first){
-        DrawCard();
         return false;
     }
     return false;
@@ -78,20 +101,51 @@ void ClientBot::ChangeCard(std::vector<bool> actions){
     }
 }
 
-void ClientBot::OnTurn(){
-    Step(true);
+void ClientBot::OnTurn(bool _stopTurn, bool _drawCard, int _stopTurns, int _drawNumber){
     bool canStep = true;
 
-    while(canStep){
-        canStep = Step(false);
+    int stops = _stopTurns;
+    int draws = _drawNumber;
+    bool backshoot = false;
+    
+    if(!Step(true, _stopTurn, _drawCard, &stops, &draws, &backshoot)){
+        if(_stopTurn){
+            stopTurns = _stopTurns;
+            canStep = false;
+
+            stops = 0;
+        }
+        else if(_drawCard){
+            logger->PushLog(std::to_string(playerId)+";FD <- "+std::to_string(draws));
+            for(int i=0; i<_drawNumber; i++){
+                DrawCard();
+            }
+            canStep = false;
+
+            draws = 0;
+        }
+        else{
+            DrawCard();
+        }
     }
 
-    
+    while(canStep){
+        canStep = Step(false, _stopTurn, _drawCard, &stops, &draws, &backshoot);
+    }
+
+    if(stops>0){
+        logger->PushLog(std::to_string(playerId)+";S -- "+std::to_string(stops)); 
+    }
 
     if(validator->ValidateEnd(onHand)){
         std::cout<<"winner"<<std::endl;
+        logger->PushLog(std::to_string(playerId) + ";W");
         return;
     }
-
-    nextPlayer->OnTurn();
+    if(backshoot){
+        lastPlayer->OnTurn(stops!=0, draws!=0,stops, draws);
+    }
+    else{
+        nextPlayer->OnTurn(stops!=0, draws!=0,stops, draws);
+    }
 }

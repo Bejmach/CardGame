@@ -15,7 +15,7 @@ class MakaoValidator : public Validator{
 		bool Validate(Card* card, bool suit = true, bool name = true) override;
 		bool ValidateEnd(std::vector<Card*>) override;
 
-		std::vector<int> CardValues(std::vector<Card*>, bool suit = true, bool name = true) override;
+		std::vector<int> CardValues(std::vector<Card*>, bool suit = true, bool name = true, std::vector<bool> specialParameters = {}) override;
 };
 
 #endif

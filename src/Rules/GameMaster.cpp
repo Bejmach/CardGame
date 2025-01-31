@@ -105,7 +105,7 @@ void GameMaster::StartGame(){
 
 	
 
-	clients[0]->OnTurn();
+	clients[0]->OnTurn(false, false, 0, 0);
 
 	logger->Save();
 }

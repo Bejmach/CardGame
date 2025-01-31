@@ -7,7 +7,7 @@ class ClientPlayer : public ClientBase{
     private:
     
     public:
-        void OnTurn() override;
+        void OnTurn(bool _stopTurn, bool _drawCard, int _stopTurns, int _drawNumber) override;
 };
 
 #endif

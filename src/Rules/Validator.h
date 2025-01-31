@@ -18,7 +18,7 @@ class Validator{
 		virtual ~Validator() {};
 
 		virtual bool Validate(Card* card, bool suit = true, bool name = true) = 0;
-		virtual std::vector<int> CardValues(std::vector<Card*>, bool suit = true, bool name = true) = 0;
+		virtual std::vector<int> CardValues(std::vector<Card*>, bool suit = true, bool name = true, std::vector<bool> specialParameters = {}) = 0;
 		virtual bool ValidateEnd(std::vector<Card*>) = 0;
 
 		void SetDeck(Deck* _deck);

@@ -21,10 +21,27 @@ bool MakaoValidator::ValidateEnd(std::vector<Card*> cards){
 	return false;
 }
 
-std::vector<int> MakaoValidator::CardValues(std::vector<Card*> cards, bool suit, bool name){
+std::vector<int> MakaoValidator::CardValues(std::vector<Card*> cards, bool suit, bool name, std::vector<bool> specialParameters){
 	std::vector<int> cardValues(cards.size());
 
 	std::vector<int> cardSuits(4, 0);
+
+	//Draw card case
+	if(specialParameters.size()!=0 && specialParameters[0]){
+		for(int i=0; i<cards.size(); i++){
+			if(!Validate(cards[i], true, true)){
+				cardValues[i] = -1;
+			}
+			else if((cards[i]->GetName()==Names::Two || cards[i]->GetName()==Names::Three)
+				|| (cards[i]->GetName() == Names::King && (cards[i]->GetSuit() == Suits::Heart || cards[i]->GetSuit() == Suits::Spade))){
+					cardValues[i] = cards[i]->GetRawName();
+				}
+			else{
+				cardValues[i] = -1;
+			}
+		}	
+		return cardValues;
+	}
 
 	for(int i=0; i<cards.size(); i++){
 		if(cards[i]->GetSuit() == Suits::Heart){
