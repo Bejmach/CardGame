@@ -54,3 +54,6 @@ void MakaoRules::CommandUpdate(std::string command){
 		logger->PushLog("F_N:U;S:"+translate::suit::Codename(card.GetSuit()));
 	}
 }
+std::vector<int> MakaoRules::GetData(){
+	return {translate::raw::Name(forceName), translate::raw::Suit(forceSuit)};
+}

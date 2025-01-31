@@ -23,6 +23,7 @@ class MakaoRules : public SpecialRules{
 
 		std::vector<bool> Validate(Card* card) override;
 		std::vector<bool> UpdateOnCard(Card *card, int playerId) override;
+		std::vector<int> GetData() override;
 
 		void CommandUpdate(std::string command) override;
 };

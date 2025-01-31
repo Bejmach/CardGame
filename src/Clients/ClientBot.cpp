@@ -107,6 +107,12 @@ void ClientBot::OnTurn(bool _stopTurn, bool _drawCard, int _stopTurns, int _draw
     int stops = _stopTurns;
     int draws = _drawNumber;
     bool backshoot = false;
+
+    if(_stopTurns<0){
+        stopTurns-=1;
+        nextPlayer->OnTurn(_stopTurn, _drawCard, _stopTurns, _drawNumber);
+        return;
+    }
     
     if(!Step(true, _stopTurn, _drawCard, &stops, &draws, &backshoot)){
         if(_stopTurn){
@@ -144,8 +150,10 @@ void ClientBot::OnTurn(bool _stopTurn, bool _drawCard, int _stopTurns, int _draw
     }
     if(backshoot){
         lastPlayer->OnTurn(stops!=0, draws!=0,stops, draws);
+        return;
     }
     else{
         nextPlayer->OnTurn(stops!=0, draws!=0,stops, draws);
+        return;
     }
 }

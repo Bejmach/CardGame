@@ -20,6 +20,7 @@ class SpecialRules{
 		//{can use, force use}
 		virtual std::vector<bool> Validate(Card* card) = 0;
 		virtual std::vector<bool> UpdateOnCard(Card *card, int playerId) = 0;
+		virtual std::vector<int> GetData() = 0;
 
 		virtual void CommandUpdate(std::string command) = 0;
 

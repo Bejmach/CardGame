@@ -33,3 +33,6 @@ std::string SO::ToUpper(std::string str){
 
 	return str;
 }
+bool SO::Numeric(std::string str){
+	return (std::to_string(std::stoi(str)) == str);
+}
