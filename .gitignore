@@ -2,6 +2,5 @@
 valgrind*
 vgcore*
 *.out
-*.sh
 log_*
 *.txt
