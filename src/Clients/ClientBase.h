@@ -46,7 +46,7 @@ class ClientBase{
 		void SetNextPlayer(ClientBase* player);
 
 		Card* GetCard(int id);
-		void DrawCard();
+		bool DrawCard();
 		void PlayCard(int id);
 
 		int HandSize();

@@ -37,12 +37,17 @@ Card* ClientBase::GetCard(int id){
 	return onHand[id];
 }
 
-void ClientBase::DrawCard(){
+bool ClientBase::DrawCard(){
 	Card* card = deck->TakeCard();
 	onHand.push_back(card);
 
 	std::string cardCode = translate::name::Code(card->GetName())+translate::suit::Codename(card->GetSuit());
 	std::string lastCode;
+	if(deck->DeckSize()+deck->UsedSize()-1 <= 0){
+		logger->PushLog("T_NC");
+		std::cout<<"Terminating, not enought cards to play"<<std::endl;
+		return false;
+	}
 	if(deck->GetLastUsed() == nullptr){
 		lastCode = "NULL";
 	}
@@ -51,6 +56,7 @@ void ClientBase::DrawCard(){
 	}
 
 	logger->PushLog(std::to_string(playerId)+";D_"+ cardCode + " -- " + lastCode);
+	return true;
 }
 void ClientBase::PlayCard(int id){
 

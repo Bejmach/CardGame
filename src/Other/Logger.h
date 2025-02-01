@@ -12,6 +12,7 @@ class Logger{
         std::vector<std::string> logs;
 
         time_t timestamp;
+        int randId;
 
     public:
         Logger();

@@ -124,14 +124,18 @@ void ClientBot::OnTurn(bool _stopTurn, bool _drawCard, int _stopTurns, int _draw
         else if(_drawCard){
             logger->PushLog(std::to_string(playerId)+";FD <- "+std::to_string(draws));
             for(int i=0; i<_drawNumber; i++){
-                DrawCard();
+                if(!DrawCard()){
+                    return;
+                };
             }
             canStep = false;
 
             draws = 0;
         }
         else{
-            DrawCard();
+            if(!DrawCard()){
+                return;
+            };
         }
     }
 
