@@ -3,4 +3,3 @@ valgrind*
 vgcore*
 *.out
 log_*
-*.txt
