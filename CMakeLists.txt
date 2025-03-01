@@ -29,7 +29,6 @@ set(SOURCES     src/Cards/Card.cpp
     src/Rules/MakaoValidator.cpp
     src/Rules/SpecialRules.cpp
     src/Rules/Validator.cpp
-    src/Server/Server.cpp)
 
 # Add executable
 add_executable(${PROJECT_NAME} ${SOURCES})
