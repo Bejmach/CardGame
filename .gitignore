@@ -3,3 +3,6 @@ valgrind*
 vgcore*
 *.out
 log_*
+*.sh
+build
+compile_commands.json
