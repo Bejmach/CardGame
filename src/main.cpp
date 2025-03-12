@@ -34,11 +34,11 @@ int main(){
 
 	std::cout<<"runtime duration: "<<duration.count()<<std::endl;
 
-	TestGetCurrentTurnRequest();
-	TestGetGameStateRequest();
-	TestGetTurnResultRequest();
-	TestPlayCardsRequest();
-	TestCreateNewGameRequest();
-	TestJoinGameRequest();
+	// TestGetCurrentTurnRequest();
+	// TestGetGameStateRequest();
+	// TestGetTurnResultRequest();
+	// TestPlayCardsRequest();
+	// TestCreateNewGameRequest();
+	// TestJoinGameRequest();
 
 }

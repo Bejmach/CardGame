@@ -32,13 +32,15 @@ set(SOURCES     src/Cards/Card.cpp
     src/Server/Server.cpp
         src/Translator/RequestTranslator.cpp
         src/Translator/RequestTranslatorTest.cpp
-        src/Translator/RequestTranslatorTest.h)
+        src/Translator/RequestTranslatorTest.h
+)
 
 # Add executable
 add_executable(${PROJECT_NAME} ${SOURCES}
         src/Translator/RequestTranslator.cpp
         src/Translator/RequestTranslatorTest.cpp
-        src/Translator/RequestTranslatorTest.h)
+        src/Translator/RequestTranslatorTest.h
+)
 
 # Include directories
 include_directories(
