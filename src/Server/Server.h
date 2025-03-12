@@ -2,6 +2,7 @@
 #define SERVER_H
 #include <iostream>
 #include <vector>
+#include <stdint.h>
 
 #include "../Clients/ClientBot.h"
 #include "../Clients/ClientPlayer.h"
@@ -12,14 +13,14 @@ class Server{
 		std::vector<GameMaster* > games;
 
 		bool CreateGame();
-		bool AddPlayer(u_int16_t gameId, ClientBase* client);
-		bool PrepGame(u_int16_t gameId);
-		bool StartGame(u_int16_t gameId);
+		bool AddPlayer(uint16_t gameId, ClientBase* client);
+		bool PrepGame(uint16_t gameId);
+		bool StartGame(uint16_t gameId);
 
-		bool DrawCard(u_int16_t gameId, u_int8_t localPlayerId);
-		bool PlayCard(u_int16_t gameId, u_int8_t localPlayerId, u_int8_t card);
+		bool DrawCard(uint16_t gameId, uint8_t localPlayerId);
+		bool PlayCard(uint16_t gameId, uint8_t localPlayerId, uint8_t card);
 
-		bool Command(u_int64_t command);
+		bool Command(uint64_t command);
 
 	public:
 		Server();

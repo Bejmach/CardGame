@@ -29,10 +29,16 @@ set(SOURCES     src/Cards/Card.cpp
     src/Rules/MakaoValidator.cpp
     src/Rules/SpecialRules.cpp
     src/Rules/Validator.cpp
-    src/Server/Server.cpp)
+    src/Server/Server.cpp
+        src/Translator/RequestTranslator.cpp
+        src/Translator/RequestTranslatorTest.cpp
+        src/Translator/RequestTranslatorTest.h)
 
 # Add executable
-add_executable(${PROJECT_NAME} ${SOURCES})
+add_executable(${PROJECT_NAME} ${SOURCES}
+        src/Translator/RequestTranslator.cpp
+        src/Translator/RequestTranslatorTest.cpp
+        src/Translator/RequestTranslatorTest.h)
 
 # Include directories
 include_directories(

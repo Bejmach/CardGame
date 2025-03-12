@@ -3,6 +3,8 @@
 #include "Clients/ClientPlayer.h"
 #include "Rules/GameMaster.h"
 #include "Clients/ClientBot.h"
+#include "Translator/RequestTranslator.h"
+#include "Translator/RequestTranslatorTest.h"
 
 #include <chrono>
 
@@ -13,7 +15,7 @@ int main(){
 	auto start = std::chrono::high_resolution_clock::now();
 	GameMaster master = GameMaster();
 
-	ClientBot player = ClientBot();
+	ClientPlayer player = ClientPlayer();
 	ClientBot bot1 = ClientBot();
 	ClientBot bot2 = ClientBot();
 	ClientBot bot3 = ClientBot();
@@ -31,5 +33,12 @@ int main(){
 	auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
 
 	std::cout<<"runtime duration: "<<duration.count()<<std::endl;
+
+	TestGetCurrentTurnRequest();
+	TestGetGameStateRequest();
+	TestGetTurnResultRequest();
+	TestPlayCardsRequest();
+	TestCreateNewGameRequest();
+	TestJoinGameRequest();
 
 }
