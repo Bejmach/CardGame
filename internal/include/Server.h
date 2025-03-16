@@ -9,19 +9,22 @@
 #include "ClientPlayer.h"
 #include "GameMaster.h"
 
-const unsigned int PORT = 3350;
-const unsigned int MAX_CLIENTS = 512;
-const unsigned int BUFFER_SIZE = 128;
-
 struct Client{
 	TCPsocket socket;
 	IPaddress ip;
 };
 
 class Server{
-	
-
 	private:
+		unsigned int PORT;
+		unsigned int MAX_CLIENTS;
+		unsigned int BUFFER_SIZE;
+
+		SDLNet_SocketSet socketSet;
+
+		char* buffer;
+
+		bool prepared = false;
 		std::vector<Client> clients;
 		std::vector<GameMaster* > games;
 
@@ -31,7 +34,9 @@ class Server{
 		void SendRequest(unsigned int playerIp);
 
 	public:
-		Server();
+		Server(unsigned int port = 3350, unsigned int maxClients = 512, unsigned int bufferSize = 128);
+		~Server();	
+	
 		void Prepare();
 
 		void Process();

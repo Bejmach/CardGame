@@ -13,7 +13,7 @@ int main(){
 	auto start = std::chrono::high_resolution_clock::now();
 	GameMaster master = GameMaster();
 
-	ClientBot player = ClientBot();
+	ClientPlayer player = ClientPlayer();
 	ClientBot bot1 = ClientBot();
 	ClientBot bot2 = ClientBot();
 	ClientBot bot3 = ClientBot();
