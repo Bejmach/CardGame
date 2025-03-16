@@ -1,0 +1,39 @@
+
+# Server requests
+1byte - request type
+
+* 0 - Current turn
+/* 2byte forced card
+//00000111 00111111
+//\______/ \______/
+// Suit     Name
+
+* 1 - Game state
+/* 1byte number of cards on hand - (n)
+/* (n)byte cards
+/* 3bytes number of cards on enemies hands
+//11_111111
+//\/ \____/
+P_Id  number(0-64)
+//char numberMask = 63
+//char number = request && numberMask
+//char plaerId = request>>6
+
+* 2 - Turn Result
+/* 1byte turn result(1 - valid move, 0 - invalid move/not your turn/game not exist/etc.)
+
+# Client requests
+1byte - request type
+
+* 0 - Play cards
+/* 1byte playerLocalId
+//00000011 (0-3)
+/* 1byte gameId
+//11111111
+/* 4byte cards
+//00111111 00111111 00111111 00111111
+//\______/ \______/ \______/ \______/
+// first                      last
+// Works on server, dont do that in request translator - validate four cards, cross validate the played cards(second, validate first, third, second, etc.)
+
+
