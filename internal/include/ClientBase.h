@@ -52,6 +52,10 @@ class ClientBase{
 		int HandSize();
 
 		int GetHighestId(bool suit, bool name, int* draws, int* highest = nullptr);
+
+		int GetId() const { return playerId; }
+
+		std::vector<Card*> GetHand();
 };
 
 #endif

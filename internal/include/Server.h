@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-#include <SDL2/SDL_net.h>
+#include <../SDL2_net/SDL_net.h>
 
 #include "ClientBot.h"
 #include "ClientPlayer.h"
@@ -35,8 +35,8 @@ class Server{
 
 	public:
 		Server(unsigned int port = 3350, unsigned int maxClients = 512, unsigned int bufferSize = 128);
-		~Server();	
-	
+		~Server();
+
 		void Prepare();
 
 		void Process();

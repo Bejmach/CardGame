@@ -17,6 +17,7 @@ include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_NET_INCLUDE_DIRS} ${CMAKE_SOURCE
 
 file(GLOB_RECURSE PROJECT_SOURCES "${CMAKE_SOURCE_DIR}/internal/src/*.cpp")
 
-add_executable(CardGame ${PROJECT_SOURCES})
+add_executable(CardGame ${PROJECT_SOURCES}
+        internal/include/RequestTranslator.h)
 
 target_link_libraries(CardGame SDL2 SDL2main SDL2_net)

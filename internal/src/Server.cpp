@@ -17,7 +17,7 @@ void Server::Prepare(){
 		prepared = false;
 		return;
 	}
-	
+
 	IPaddress ip;
 	if(SDLNet_ResolveHost(&ip, NULL, PORT) < 0){
 		std::cerr<<"SDlNet_ResolveHost failed: "<<SDLNet_GetError()<<std::endl;

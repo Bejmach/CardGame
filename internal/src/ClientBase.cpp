@@ -115,3 +115,7 @@ int ClientBase::GetHighestId(bool suit, bool name, int* draws, int *highest){
 	}
 	return id;
 }
+
+std::vector<Card*> ClientBase::GetHand() {
+	return onHand;
+}
