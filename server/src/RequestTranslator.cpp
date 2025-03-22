@@ -49,29 +49,12 @@ std::string RT::ResTurnResult(bool isValidMove) {
 }
 
 // Client Requests
-std::string RT::ReqPlayCards(char playerLocalId, char gameId, std::vector<Card*> cards) {
-	std::string request;
-	request.resize(BUFFER_SIZE);
-
-    request[0] = 0; // Request: Play cards
-    request[1] = playerLocalId;
-    request[2] = gameId;
-	request[3] = cards.size();
-
-    // Cards to play
-    for(int i=0; i<cards.size(); i++) {
-        request[4+i] = static_cast<char>(cards[i]->GetSuit());
-		request[5+i] = static_cast<char>(cards[i]->GetName());
-    }
-
-    return request;
-}
 
 std::string RT::ReqNewGame() {
 	std::string request;
 	request.resize(BUFFER_SIZE);
 	
-	request[0] = 1;
+	request[0] = 0;
 
 	return request;
 }
@@ -80,9 +63,37 @@ std::string RT::ReqJoinGame(char gameId, char clientId) {
 	std::string request;
 	request.resize(BUFFER_SIZE);
 
-	request[0] = 2;
+	request[0] = 1;
 	request[1] = gameId;
 	request[2] = clientId;
 
 	return request;
 }
+std::string RT::ReqStartGame(char gameId){
+	std::string request;
+	request.resize(BUFFER_SIZE);
+
+	request[0] = 2;
+	request[1] = gameId;
+	
+	return request;
+}
+std::string RT::ReqPlayCards(char gameId, char playerLocalId, std::vector<Card*> cards) {
+	std::string request;
+	request.resize(BUFFER_SIZE);
+
+    request[0] = 3; // Request: Play cards
+    request[1] = playerLocalId;
+    request[2] = gameId;
+	request[3] = cards.size();
+
+    // Cards to play
+    for(int i=0; i<4; i++) {
+		request[4+i] = static_cast<char>(cards[i]->GetSuit());
+		request[5+i] = static_cast<char>(cards[i]->GetName());
+    }
+
+    return request;
+}
+
+

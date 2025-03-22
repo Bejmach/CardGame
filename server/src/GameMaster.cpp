@@ -103,7 +103,16 @@ void GameMaster::StartGame() {
 		std::cout<<"Cant start before preparing the game"<<std::endl;
 	}
 
+	started = true;
+
     clients[0]->OnTurn(false, false, 0, 0);
 
 	logger->Save();
+}
+
+bool GameMaster::GetStarted(){
+	return started;
+}
+Validator* GameMaster::GetValidator(){
+	return validator;
 }

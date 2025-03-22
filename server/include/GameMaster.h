@@ -26,6 +26,7 @@ private:
 	GameModes mode;
 
 	bool prepared = false;
+	bool started = false;
 
 public:
 	GameMaster(GameModes _mode = GameModes::Makao);
@@ -34,6 +35,10 @@ public:
 	void PrepareGame();
 	void AddPlayer(ClientBase* client);
 	void StartGame();
+
+	bool GetStarted();
+
+	Validator* GetValidator();
 };
 
 #endif

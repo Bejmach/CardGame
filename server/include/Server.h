@@ -3,11 +3,14 @@
 #include <iostream>
 #include <vector>
 
-#include <../SDL2_net/SDL_net.h>
+#include <SDL2/SDL_net.h>
 
 #include "ClientBot.h"
 #include "ClientPlayer.h"
 #include "GameMaster.h"
+#include "RequestTranslator.h"
+#include "Validator.h"
+
 
 struct Client{
 	TCPsocket socket;
@@ -40,6 +43,8 @@ class Server{
 		void Prepare();
 
 		void Process();
+
+		void HandleRequests(char* req);
 };
 
 #endif
