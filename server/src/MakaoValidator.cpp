@@ -1,4 +1,4 @@
-#include "MakaoValidator.h"
+#include "../include/MakaoValidator.h"
 
 MakaoValidator::MakaoValidator(GameModes _mode, Deck* _deck, SpecialRules* _rules) : Validator(_mode, _deck, _rules){}
 

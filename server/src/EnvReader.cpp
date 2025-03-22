@@ -1,4 +1,4 @@
-#include "EnvReader.h"
+#include "../include/EnvReader.h"
 
 EnvReader::EnvReader(std::string _path){
 	path = _path;

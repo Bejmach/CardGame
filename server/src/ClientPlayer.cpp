@@ -1,4 +1,4 @@
-#include "ClientPlayer.h"
+#include "../include/ClientPlayer.h"
 
 ClientPlayer::ClientPlayer(Deck* _deck, Validator* _validator){
     this->deck = _deck;

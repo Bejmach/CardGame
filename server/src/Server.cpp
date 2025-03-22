@@ -1,4 +1,4 @@
-#include "Server.h"
+#include "../include/Server.h"
 
 Server::Server(unsigned int port, unsigned int maxClients, unsigned int bufferSize){
 	PORT = port;

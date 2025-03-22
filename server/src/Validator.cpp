@@ -1,5 +1,5 @@
-#include "Validator.h"
-#include "GameModes.h"
+#include "../include/Validator.h"
+#include "../include/GameModes.h"
 
 Validator::Validator(GameModes _mode, Deck* _deck, SpecialRules* _rules){
 	deck = _deck;

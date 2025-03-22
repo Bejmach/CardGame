@@ -1,4 +1,4 @@
-#include "ClientBase.h"
+#include "../include/ClientBase.h"
 
 ClientBase::ClientBase(Deck* _deck, Validator* _validator, SpecialRules* _rules){
 	deck = _deck;

@@ -1,4 +1,4 @@
-#include "ClientBot.h"
+#include "../include/ClientBot.h"
 
 ClientBot::ClientBot(Deck* _deck, Validator* _validator){
     this->deck = _deck;

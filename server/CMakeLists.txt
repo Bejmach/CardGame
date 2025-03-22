@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(CardGame)
+project(CardGameServer)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -15,9 +15,8 @@ set(SDL2_NET_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/external/SDL2_net)
 # Include SDL2 headers
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_NET_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/internal/include)
 
-file(GLOB_RECURSE PROJECT_SOURCES "${CMAKE_SOURCE_DIR}/internal/src/*.cpp")
+file(GLOB_RECURSE PROJECT_SOURCES "${CMAKE_SOURCE_DIR}/src/*.cpp")
 
-add_executable(CardGame ${PROJECT_SOURCES}
-        internal/include/RequestTranslator.h)
+add_executable(CardGameServer ${PROJECT_SOURCES})
 
-target_link_libraries(CardGame SDL2 SDL2main SDL2_net)
+target_link_libraries(CardGameServer SDL2 SDL2main SDL2_net)

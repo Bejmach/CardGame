@@ -22,7 +22,9 @@ private:
 	SpecialRules* rules = nullptr;
 	Deck* deck = nullptr;
 	Logger* logger = nullptr;
+
 	GameModes mode;
+
 	bool prepared = false;
 
 public:
@@ -32,10 +34,6 @@ public:
 	void PrepareGame();
 	void AddPlayer(ClientBase* client);
 	void StartGame();
-	void SetLogger(Logger* _logger);
-	void SendCurrentTurnRequest(char playerId);
-	void SendGameStateRequest();
-	void SendPlayCardsRequest(char playerLocalId, const std::vector<Card*>& cards);
 };
 
 #endif

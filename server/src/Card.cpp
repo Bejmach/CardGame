@@ -1,4 +1,4 @@
-#include "Card.h"
+#include "../include/Card.h"
 
 Card::Card(Suits _suit, Names _name){
 	suit = _suit;

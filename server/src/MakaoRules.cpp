@@ -1,4 +1,4 @@
-#include "MakaoRules.h"
+#include "../include/MakaoRules.h"
 
 
 MakaoRules::MakaoRules(GameModes _mode, int playerCount): SpecialRules(_mode){

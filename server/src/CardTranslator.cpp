@@ -1,5 +1,5 @@
-#include "CardTranslator.h"
-#include "CardTypes.h"
+#include "../include/CardTranslator.h"
+#include "../include/CardTypes.h"
 
 int translate::raw::Suit(Suits suit){
 	return static_cast<int>(suit);

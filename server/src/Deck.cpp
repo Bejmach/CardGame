@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 
-#include "CardTranslator.h"
-#include "Deck.h"
+#include "../include/CardTranslator.h"
+#include "../include/Deck.h"
 
 int randRange(int min, int max){
 	return min + rand()%max-min+1;

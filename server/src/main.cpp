@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "ClientPlayer.h"
-#include "GameMaster.h"
-#include "ClientBot.h"
+#include "../include/ClientPlayer.h"
+#include "../include/GameMaster.h"
+#include "../include/ClientBot.h"
 
 #include <chrono>
 

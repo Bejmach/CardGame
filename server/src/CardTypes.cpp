@@ -1,4 +1,4 @@
-#include "CardTypes.h"
+#include "../include/CardTypes.h"
 
 std::vector<std::string> SuitsCode = {"♥", "♦", "♣", "♠"};
 std::vector<std::string> SuitsCodename = {"H", "D", "C", "S"};
