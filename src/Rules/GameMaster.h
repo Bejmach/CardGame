@@ -5,12 +5,11 @@
 #include "Validator.h"
 #include "SpecialRules.h"
 #include "../Cards/Deck.h"
+#include "../Cards/CardTranslator.h"
 #include "../Other/Logger.h"
 #include "MakaoValidator.h"
 #include "MakaoRules.h"
 #include "GameModes.h"
-#include "../Other/Logger.h"
-#include "../Translator/RequestTranslator.h"
 
 #include <iostream>
 #include <vector>
@@ -33,9 +32,9 @@ public:
 	void AddPlayer(ClientBase* client);
 	void StartGame();
 	void SetLogger(Logger* _logger);
-	void SendCurrentTurnRequest(uint8_t playerId);
+	void SendCurrentTurnRequest(char playerId);
 	void SendGameStateRequest();
-	void SendPlayCardsRequest(uint8_t playerLocalId, const std::vector<Card*>& cards);
+	void SendPlayCardsRequest(char playerLocalId, const std::vector<Card*>& cards);
 };
 
 #endif

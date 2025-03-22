@@ -4,7 +4,6 @@
 #include "Rules/GameMaster.h"
 #include "Clients/ClientBot.h"
 #include "Translator/RequestTranslator.h"
-#include "Translator/RequestTranslatorTest.h"
 
 #include <chrono>
 
@@ -33,12 +32,5 @@ int main(){
 	auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
 
 	std::cout<<"runtime duration: "<<duration.count()<<std::endl;
-
-	// TestGetCurrentTurnRequest();
-	// TestGetGameStateRequest();
-	// TestGetTurnResultRequest();
-	// TestPlayCardsRequest();
-	// TestCreateNewGameRequest();
-	// TestJoinGameRequest();
 
 }

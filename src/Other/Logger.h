@@ -10,14 +10,12 @@
 class Logger{
     private:
         std::vector<std::string> logs;
-
         time_t timestamp;
         int randId;
 
     public:
         Logger();
         void PushLog(std::string log);
-
         void Save();
 };
 
