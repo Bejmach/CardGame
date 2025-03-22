@@ -83,11 +83,6 @@ void GameMaster::PrepareGame() {
 }
 
 void GameMaster::AddPlayer(ClientBase* client) {
-    if (!logger) {
-        logger = new Logger();
-        logger->PushLog("Logger initialized in AddPlayer.");
-    }
-
     clients.push_back(client);
     prepared = false;
     logger->PushLog("Added player with ID: " + std::to_string(client->GetId()));
