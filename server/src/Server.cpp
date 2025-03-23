@@ -40,39 +40,38 @@ void Server::Prepare(){
 	SDLNet_TCP_AddSocket(socketSet, server);
 }
 
-void Server::Process(){
-	if(socketSet == NULL || server == NULL){
-		return;
-	}
-	SDLNet_CheckSockets(socketSet, 1000);
-	TCPsocket clientSocket = SDLNet_TCP_Accept(server);
-	if(clientSocket){
-		Client newClient = Client({clientSocket, *SDLNet_TCP_GetPeerAddress(clientSocket)});
-		clients.push_back(newClient);
-		SDLNet_TCP_AddSocket(socketSet, clientSocket);
-		std::cout<<"New client connected"<<std::endl;
-		for(int i=0; i<clients.size(); i++){
-			SendResponce(i, "New client connected");
+void Server::Start(){
+	while(true){
+		if(socketSet == NULL || server == NULL){
+			return;
 		}
-	}
-	for(size_t i=0; i<clients.size(); i++){
-		if(SDLNet_SocketReady(clients[i].socket)){
-			int received = SDLNet_TCP_Recv(clients[i].socket, buffer, BUFFER_SIZE);
-			if(received<=0){
-				std::cout<<"client disconected"<<std::endl;
-				SDLNet_TCP_DelSocket(socketSet, clients[i].socket);
-				SDLNet_TCP_Close(clients[i].socket);
-				clients.erase(clients.begin()+i);
-				i--;
-			}
-			else{
-				std::cout<<"Message received: "<<buffer<<std::endl;
+		SDLNet_CheckSockets(socketSet, 1000);
+		TCPsocket clientSocket = SDLNet_TCP_Accept(server);
+		if(clientSocket){
+			Client* newClient = new Client({clientSocket, *SDLNet_TCP_GetPeerAddress(clientSocket)});
+			clients.push_back(newClient);
+			SDLNet_TCP_AddSocket(socketSet, clientSocket);
+			std::cout<<"New client connected"<<std::endl;
+		}
+		for(size_t i=0; i<clients.size(); i++){
+			if(SDLNet_SocketReady(clients[i]->socket)){
+				int received = SDLNet_TCP_Recv(clients[i]->socket, buffer, BUFFER_SIZE);
+				if(received<=0){
+					std::cout<<"client disconected"<<std::endl;
+					SDLNet_TCP_DelSocket(socketSet, clients[i]->socket);
+					SDLNet_TCP_Close(clients[i]->socket);
+					clients.erase(clients.begin()+i);
+					i--;
+				}
+				else{
+					std::cout<<"Message received: "<<buffer<<std::endl;
+				}
 			}
 		}
 	}
 }
 
-void Server::HandleRequests(char* req){
+void Server::HandleRequests(char* req, Client* client){
 	if(req[0] == 0){
 		if(games.size()<256){
 			games.push_back(new GameMaster());
@@ -105,6 +104,11 @@ void Server::HandleRequests(char* req){
 		char gameId = req[2];
 		int cardsSize = req[3];
 
+		if(gameId>=games.size()){
+			std::cout<<"Tried to play in not existing game"<<std::endl;
+			return;
+		}
+
 		if(cardsSize == 0){
 			std::cout<<"Tried to play empty hand"<<std::endl;
 			return;
@@ -125,18 +129,29 @@ void Server::HandleRequests(char* req){
 			}
 		}
 
-		//Get clientHandler of playerLocalId in game
+		GameMaster* master = games[gameId];
+
+		ClientBase* clientBase = master->GetClients()[playerLocalId];
+		//find cards in player hand and play them
 		for(int i=0; i<cards.size(); i++){
-			//find cards[i] id in clientHandler
-			//play cards[i] id in clientHandler
+			std::vector<Card*> clientCards = clientBase->GetHand(); 
+			for(int j=0; j<clientCards.size(); j++){
+				if(clientCards[j]->GetName() == cards[i].GetName() && clientCards[j]->GetSuit() == cards[i].GetSuit()){
+					clientBase->PlayCard(j);
+				}
+			}
 		}
-		//Send ResTurnResult to client
+		for(int i=0; i<clients.size(); i++){
+			if(clients[i] == client){
+				SendResponce(i, RT::ResTurnResult(true).c_str());
+			}
+		}
 	}
 }
 void Server::SendResponce(unsigned int playerId, const char* responce){
 	if(playerId>=clients.size()){
 		return;
 	}
-	SDLNet_TCP_Send(clients[playerId].socket, responce, strlen(responce)+1);
+	SDLNet_TCP_Send(clients[playerId]->socket, responce, strlen(responce)+1);
 }
 

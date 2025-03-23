@@ -10,35 +10,35 @@
 #include "MakaoValidator.h"
 #include "MakaoRules.h"
 #include "GameModes.h"
-#include "RequestTranslator.h"
 
 #include <iostream>
 #include <vector>
 
 class GameMaster {
-private:
-	std::vector<ClientBase*> clients;
-	Validator* validator = nullptr;
-	SpecialRules* rules = nullptr;
-	Deck* deck = nullptr;
-	Logger* logger = nullptr;
+	private:
+		std::vector<ClientBase*> clients;
+		Validator* validator = nullptr;
+		SpecialRules* rules = nullptr;
+		Deck* deck = nullptr;
+		Logger* logger = nullptr;
 
-	GameModes mode;
+		GameModes mode;
 
-	bool prepared = false;
-	bool started = false;
+		bool prepared = false;
+		bool started = false;
 
-public:
-	GameMaster(GameModes _mode = GameModes::Makao);
-	~GameMaster();
+	public:
+		GameMaster(GameModes _mode = GameModes::Makao);
+		~GameMaster();
 
-	void PrepareGame();
-	void AddPlayer(ClientBase* client);
-	void StartGame();
+		void PrepareGame();
+		void AddPlayer(ClientBase* client);
+		void StartGame();
 
-	bool GetStarted();
+		bool GetStarted();
 
-	Validator* GetValidator();
+		Validator* GetValidator();
+		std::vector<ClientBase*> GetClients();
 };
 
 #endif

@@ -1,5 +1,4 @@
 #include "../include/GameMaster.h"
-#include "../include/GameMaster.h"
 #include <string>
 
 GameMaster::GameMaster(GameModes _mode) : mode(_mode), logger(new Logger()) {
@@ -115,4 +114,7 @@ bool GameMaster::GetStarted(){
 }
 Validator* GameMaster::GetValidator(){
 	return validator;
+}
+std::vector<ClientBase*> GameMaster::GetClients(){
+	return clients;
 }

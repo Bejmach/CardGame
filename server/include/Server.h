@@ -30,7 +30,7 @@ class Server{
 		char* buffer;
 
 		bool prepared = false;
-		std::vector<Client> clients;
+		std::vector<Client*> clients;
 		std::vector<GameMaster* > games;
 
 		bool CreateGame();
@@ -44,9 +44,9 @@ class Server{
 
 		void Prepare();
 
-		void Process();
+		void Start();
 
-		void HandleRequests(char* req);
+		void HandleRequests(char* req, Client* client);
 };
 
 #endif

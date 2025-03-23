@@ -22,6 +22,9 @@ void ClientBase::SetLogger(Logger* _logger){
 void ClientBase::SetId(int _id){
 	playerId = _id;
 }
+int ClientBase::GetId(){
+	return playerId;
+}
 
 void ClientBase::SetLastPlayer(ClientBase *player){
 	lastPlayer = player;
