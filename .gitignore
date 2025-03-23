@@ -1,8 +1,9 @@
 .ccls*
+*.cache*
 valgrind*
 vgcore*
 *.out
-log_*
+*log_*
 *.sh
 build
 compile_commands.json
