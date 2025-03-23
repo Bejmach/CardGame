@@ -23,6 +23,8 @@ class Server{
 		unsigned int MAX_CLIENTS;
 		unsigned int BUFFER_SIZE;
 
+		IPaddress ip;
+		TCPsocket server;
 		SDLNet_SocketSet socketSet;
 
 		char* buffer;
@@ -34,7 +36,7 @@ class Server{
 		bool CreateGame();
 
 		void OnRequest(char* req);
-		void SendRequest(unsigned int playerIp);
+		void SendResponce(unsigned int playerIp, const char* responce);
 
 	public:
 		Server(unsigned int port = 3350, unsigned int maxClients = 512, unsigned int bufferSize = 128);

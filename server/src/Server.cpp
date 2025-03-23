@@ -1,4 +1,6 @@
 #include "../include/Server.h"
+#include "SDL_net.h"
+#include <SDL2/SDL_net.h>
 
 
 Server::Server(unsigned int port, unsigned int maxClients, unsigned int bufferSize){
@@ -19,14 +21,13 @@ void Server::Prepare(){
 		return;
 	}
 
-	IPaddress ip;
 	if(SDLNet_ResolveHost(&ip, NULL, PORT) < 0){
 		std::cerr<<"SDlNet_ResolveHost failed: "<<SDLNet_GetError()<<std::endl;
 		prepared = false;
 		return;
 	}
 
-	TCPsocket server = SDLNet_TCP_Open(&ip);
+	server = SDLNet_TCP_Open(&ip);
 	if(!server){
 		std::cerr<<"SDLNet_TCP_Open failed: "<<SDLNet_GetError()<<std::endl;
 		prepared = false;
@@ -35,10 +36,40 @@ void Server::Prepare(){
 	prepared = true;
 	std::cout<<"server listening on port "<<PORT<<"...\n";
 
-	SDLNet_SocketSet socketSet = SDLNet_AllocSocketSet(MAX_CLIENTS+1);
+	socketSet = SDLNet_AllocSocketSet(MAX_CLIENTS+1);
 	SDLNet_TCP_AddSocket(socketSet, server);
+}
 
-	char buffer[BUFFER_SIZE];
+void Server::Process(){
+	if(socketSet == NULL || server == NULL){
+		return;
+	}
+	SDLNet_CheckSockets(socketSet, 1000);
+	TCPsocket clientSocket = SDLNet_TCP_Accept(server);
+	if(clientSocket){
+		Client newClient = Client({clientSocket, *SDLNet_TCP_GetPeerAddress(clientSocket)});
+		clients.push_back(newClient);
+		SDLNet_TCP_AddSocket(socketSet, clientSocket);
+		std::cout<<"New client connected"<<std::endl;
+		for(int i=0; i<clients.size(); i++){
+			SendResponce(i, "New client connected");
+		}
+	}
+	for(size_t i=0; i<clients.size(); i++){
+		if(SDLNet_SocketReady(clients[i].socket)){
+			int received = SDLNet_TCP_Recv(clients[i].socket, buffer, BUFFER_SIZE);
+			if(received<=0){
+				std::cout<<"client disconected"<<std::endl;
+				SDLNet_TCP_DelSocket(socketSet, clients[i].socket);
+				SDLNet_TCP_Close(clients[i].socket);
+				clients.erase(clients.begin()+i);
+				i--;
+			}
+			else{
+				std::cout<<"Message received: "<<buffer<<std::endl;
+			}
+		}
+	}
 }
 
 void Server::HandleRequests(char* req){
@@ -101,5 +132,11 @@ void Server::HandleRequests(char* req){
 		}
 		//Send ResTurnResult to client
 	}
+}
+void Server::SendResponce(unsigned int playerId, const char* responce){
+	if(playerId>=clients.size()){
+		return;
+	}
+	SDLNet_TCP_Send(clients[playerId].socket, responce, strlen(responce)+1);
 }
 

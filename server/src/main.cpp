@@ -4,10 +4,12 @@
 #include "../include/GameMaster.h"
 #include "../include/ClientBot.h"
 
+#include "../include/Server.h"
+
 #include <chrono>
 
 int main(){
-	
+	/*
 	srand(time(NULL));
 
 	auto start = std::chrono::high_resolution_clock::now();
@@ -31,5 +33,13 @@ int main(){
 	auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
 
 	std::cout<<"runtime duration: "<<duration.count()<<std::endl;
+	*/
+	Server* server = new Server();
+	server->Prepare();
 
+	while(true){
+		server->Process();
+	}
+
+	delete server;
 }
