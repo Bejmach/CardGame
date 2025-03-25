@@ -1,6 +1,7 @@
 #include "../include/Server.h"
 #include "SDL_net.h"
 #include <SDL2/SDL_net.h>
+#include <string>
 
 
 
@@ -88,14 +89,20 @@ void Server::HandleRequests(char* req, Client* client){
 	else if(req[0] == 1){
 		ClientBase* cb = new ClientWeb();
 		games[req[1]]->AddPlayer(cb);
-		std::string responce = RT::ResPlayerData(-1, games[req[1]]->GetClients().size()-1);
+		std::string responce = RT::ResPlayerData(-1, games.size()-1);
 		SDLNet_TCP_Send(client->socket, responce.c_str(), strlen(responce.c_str())+1);
+		responce = "Joined game "+std::to_string((int)req[1]);
+		SendResponce(client, responce.c_str());
 	}
 	else if(req[0] == 2){
 		if(games.size()-1>=req[1]){
 			if(!games[req[1]]->GetStarted()){
 				games[req[1]]->PrepareGame();
 				games[req[1]]->StartGame();
+				std::string responce = "Started game "+std::to_string((int)req[1]);
+				SendResponce(client, responce.c_str());
+				responce = RT::ResGameState(games[req[1]]->GetClients()[0]->GetHand(), {{1, 5}});
+				SendResponce(clients[0], responce.c_str());
 			}
 			else{
 				std::cout<<"Trying to prepare game that already started"<<std::endl;
@@ -110,8 +117,8 @@ void Server::HandleRequests(char* req, Client* client){
 		char gameId = req[2];
 		int cardsSize = req[3];
 
-		if(gameId>=games.size()-1){
-			std::cout<<"Tried to play in not existing game "<<gameId<<". Max id "<<games.size()-1<<std::endl;
+		if(gameId>games.size()-1){
+			std::cout<<"Tried to play in not existing game "<<(int)gameId<<". Max id "<<games.size()-1<<std::endl;
 			return;
 		}
 
@@ -155,5 +162,8 @@ void Server::SendResponce(unsigned int playerId, const char* responce){
 		return;
 	}
 	SDLNet_TCP_Send(clients[playerId]->socket, responce, strlen(responce)+1);
+}
+void Server::SendResponce(Client* client, const char* responce){
+	SDLNet_TCP_Send(client->socket, responce, strlen(responce)+1);
 }
 

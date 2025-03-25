@@ -89,7 +89,12 @@ std::string ClientConsole::ConvertMessage(std::string message){
 
 void ClientConsole::DecodeResponce(char* res){
 	if(res[0] == 3){
-		clientId = res[1];
+		if(res[1]>=0){
+			clientId = res[1];
+		}
+		if(res[2]>=0){
+			gameClientId = res[2];
+		}
 	}
 	else if(res[0] == 0){
 		std::cout<<"Current card on table: "<<translate::name::EN(static_cast<Names>(res[2]))<<" "<<translate::suit::EN(static_cast<Suits>(res[1]))<<std::endl;
@@ -112,5 +117,8 @@ void ClientConsole::DecodeResponce(char* res){
 		else{
 			std::cout<<"Move invalid. Do new move"<<std::endl;
 		}
+	}
+	else{
+		std::cout<<res<<std::endl;
 	}
 }

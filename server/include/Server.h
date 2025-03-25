@@ -38,6 +38,7 @@ class Server{
 
 		void OnRequest(char* req);
 		void SendResponce(unsigned int playerIp, const char* responce);
+		void SendResponce(Client* client, const char* responce);
 
 	public:
 		Server(unsigned int port = 3350, unsigned int maxClients = 512, unsigned int bufferSize = 128);
