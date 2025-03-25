@@ -3,6 +3,7 @@
 #include <SDL2/SDL_net.h>
 
 
+
 Server::Server(unsigned int port, unsigned int maxClients, unsigned int bufferSize){
 	PORT = port;
 	MAX_CLIENTS = maxClients;
@@ -52,6 +53,8 @@ void Server::Start(){
 			clients.push_back(newClient);
 			SDLNet_TCP_AddSocket(socketSet, clientSocket);
 			std::cout<<"New client connected"<<std::endl;
+			std::string responce = RT::ResPlayerData(clients.size()-1, -1);
+			SDLNet_TCP_Send(newClient->socket, responce.c_str(), strlen(responce.c_str())+1);
 		}
 		for(size_t i=0; i<clients.size(); i++){
 			if(SDLNet_SocketReady(clients[i]->socket)){
@@ -64,7 +67,8 @@ void Server::Start(){
 					i--;
 				}
 				else{
-					std::cout<<"Message received: "<<buffer<<std::endl;
+					//std::cout<<"Message received: "<<buffer<<std::endl;
+					HandleRequests(buffer, clients[i]);
 				}
 			}
 		}
@@ -75,18 +79,20 @@ void Server::HandleRequests(char* req, Client* client){
 	if(req[0] == 0){
 		if(games.size()<256){
 			games.push_back(new GameMaster());
+			std::cout<<"Game created on Id "<<games.size()-1<<std::endl;
 		}
 		else{
 			std::cout<<"increase max game size"<<std::endl;
 		}
 	}
 	else if(req[0] == 1){
-		//create new clientHandler
-		//bind clientHandler to clientUI on Id req[2];
-		//add clientHandler to GameMaster on Id = req[1];
+		ClientBase* cb = new ClientWeb();
+		games[req[1]]->AddPlayer(cb);
+		std::string responce = RT::ResPlayerData(-1, games[req[1]]->GetClients().size()-1);
+		SDLNet_TCP_Send(client->socket, responce.c_str(), strlen(responce.c_str())+1);
 	}
 	else if(req[0] == 2){
-		if(games.size()<req[1]){
+		if(games.size()-1>=req[1]){
 			if(!games[req[1]]->GetStarted()){
 				games[req[1]]->PrepareGame();
 				games[req[1]]->StartGame();
@@ -96,7 +102,7 @@ void Server::HandleRequests(char* req, Client* client){
 			}
 		}
 		else{
-			std::cout<<"Trying to prepare not existins game"<<std::endl;
+			std::cout<<"Trying to prepare not existins game "<<req[1]<<". Max id "<<games.size()-1<<std::endl;
 		}
 	}
 	else if(req[0] == 3){
@@ -104,8 +110,8 @@ void Server::HandleRequests(char* req, Client* client){
 		char gameId = req[2];
 		int cardsSize = req[3];
 
-		if(gameId>=games.size()){
-			std::cout<<"Tried to play in not existing game"<<std::endl;
+		if(gameId>=games.size()-1){
+			std::cout<<"Tried to play in not existing game "<<gameId<<". Max id "<<games.size()-1<<std::endl;
 			return;
 		}
 
@@ -114,16 +120,16 @@ void Server::HandleRequests(char* req, Client* client){
 			return;
 		}
 
-		std::vector<Card> cards; 
+		std::vector<Card*> cards; 
 
 		for(int i = 0; i<cardsSize; i++){
-			Card card = Card(req[4+i*2], req[5+i*2]);
-			cards.push_back(card);
+			int cardId = req[4+i];
+			cards.push_back(games[gameId]->GetClients()[playerLocalId]->GetHand()[cardId]);
 		}
 
-		Names usedName = cards[0].GetName();
+		Names usedName = cards[0]->GetName();
 		for(int i=1; i<cards.size(); i++){
-			if(cards[i].GetName()!=usedName){
+			if(cards[i]->GetName()!=usedName){
 				std::cout<<"Tried to play cards of different names"<<std::endl;
 				return;
 			}
@@ -133,13 +139,9 @@ void Server::HandleRequests(char* req, Client* client){
 
 		ClientBase* clientBase = master->GetClients()[playerLocalId];
 		//find cards in player hand and play them
-		for(int i=0; i<cards.size(); i++){
-			std::vector<Card*> clientCards = clientBase->GetHand(); 
-			for(int j=0; j<clientCards.size(); j++){
-				if(clientCards[j]->GetName() == cards[i].GetName() && clientCards[j]->GetSuit() == cards[i].GetSuit()){
-					clientBase->PlayCard(j);
-				}
-			}
+		for(int i=0; i<cardsSize; i++){
+			int cardId = req[4+i];
+			clientBase->PlayCard(cardId);
 		}
 		for(int i=0; i<clients.size(); i++){
 			if(clients[i] == client){

@@ -53,12 +53,11 @@ std::string RT::ResTurnResult(bool isValidMove) {
     return responce;
 }
 
-std::string RT::ResPlayerData(char clientId, char clientGameId){
+std::string RT::ResPlayerData(char clientId){
 	std::string responce;
 	responce.resize(BUFFER_SIZE);
 	responce[0] = 3;
 	responce[1] = clientId;
-	responce[2] = clientGameId;
 	return responce;
 }
 

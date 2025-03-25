@@ -13,7 +13,7 @@ namespace RT{
 		std::string ResCurTurn(char suit, char name);
 		std::string ResGameState(std::vector<Card*> handCards, std::vector<std::pair<char, char>> enemies);
 		std::string ResTurnResult(bool isValidMove);
-		std::string ResPlayerData(char clientId, char clientGameId);
+		std::string ResPlayerData(char clientId);
 
 	    // Client Requests
 		std::string ReqNewGame();

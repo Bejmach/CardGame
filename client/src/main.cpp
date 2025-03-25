@@ -1,8 +1,11 @@
-#include "../include/ClientBase.h"
+#include "../include/ClientConsole.h"
+
+#include <iostream>
 
 int main(){
-	ClientBase* client = new ClientBase();
-
+	
+	ClientConsole* client = new ClientConsole();
+	
 	client->Prepare();
 
 	client->Start();

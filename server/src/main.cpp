@@ -37,9 +37,7 @@ int main(){
 	Server* server = new Server();
 	server->Prepare();
 
-	while(true){
-		server->Process();
-	}
+	server->Start();
 
 	delete server;
 }

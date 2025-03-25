@@ -7,6 +7,7 @@
 
 #include "ClientBot.h"
 #include "ClientPlayer.h"
+#include "ClientWeb.h"
 #include "GameMaster.h"
 #include "RequestTranslator.h"
 #include "Validator.h"
