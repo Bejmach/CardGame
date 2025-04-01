@@ -102,7 +102,7 @@ void Server::HandleRequests(char* req, Client* client){
 				std::string responce = "Started game "+std::to_string((int)req[1]);
 				SendResponce(client, responce.c_str());
 				responce = RT::ResGameState(games[req[1]]->GetClients()[0]->GetHand(), {{1, 5}});
-				SendResponce(clients[0], responce.c_str());
+				SendResponce(client, responce.c_str());
 			}
 			else{
 				std::cout<<"Trying to prepare game that already started"<<std::endl;
@@ -142,6 +142,11 @@ void Server::HandleRequests(char* req, Client* client){
 			}
 		}
 
+		if(!games[gameId]->GetValidator()->Validate(cards[0])){
+			SendResponce(client, RT::ResTurnResult(false).c_str());
+			return;
+		}
+
 		GameMaster* master = games[gameId];
 
 		ClientBase* clientBase = master->GetClients()[playerLocalId];
@@ -150,9 +155,10 @@ void Server::HandleRequests(char* req, Client* client){
 			int cardId = req[4+i];
 			clientBase->PlayCard(cardId);
 		}
+		SendResponce(client, RT::ResTurnResult(true).c_str());
 		for(int i=0; i<clients.size(); i++){
-			if(clients[i] == client){
-				SendResponce(i, RT::ResTurnResult(true).c_str());
+			for(int i=0; i<games[gameId]->GetClients().size(); i++){
+				std::string responce = RT::ResGameState(games[gameId]->GetClients()[i]->GetHand(), {{1, 1}});
 			}
 		}
 	}

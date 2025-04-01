@@ -9,9 +9,9 @@
 #include <chrono>
 
 int main(){
-	/*
+	
 	srand(time(NULL));
-
+	/*
 	auto start = std::chrono::high_resolution_clock::now();
 	GameMaster master = GameMaster();
 
