@@ -1,51 +1,51 @@
 # CardGameBackend
 
-## Send data construction
-### Client
-* 0-3 localId (user id in room); 2 bytes
-* 0-1023 roomId; 10 bytes /*temporary*/
-* 0-3 move (0-draw, 1-play...); 2 bytes /*temporary*/
-* 0-51 card; 6 bytes
-* 20 bytes
-* use int32
-### Server
-#### Send before move
-* 0-13 - current card name; 4 bytes
-* 0-4 - current card suit; 3 bytes(undefined exists)
-* 7 bytes
-* use int8
-#### Send after move
-##### Approach 1
-/*Safe?*/
-* 0-1 valid move; 1 byte;
-* 0-51 number of cards on hand; 6 bytes
-* struct{0-51 card type; 6 bytes} * number of card; 6-312 bytes
-* 319 bytes
-* use something, that can store so many bytes
-##### Approach 2
-/*Probably safe?*/
-* 0-1 valid move; 1 byte;
-* 0-52 card to dispose (one additional for situations where move is not valid) 6 bytes
-* 7 bytes
-* use int8;
-#### Send after other players
-* 0-3 localId; 2 bytes
-* 0-3 move; 2 bytes/*temporary*/
-* 0-13 card name; 4 bytes
-* 0-4 card suit; 3 bytes
-* 11 bytes
-* use int16
-## Work rules
-### Before starting work
-* Create new branch
-### While working
-* Do whatever you like
-### Before Commiting
-* Update gitignore to remove all unnecesary data, like executables/hidden editor folders/editor data
-* Check if you only commit source code and needed data(if something like that went to git add, update gitignore to skip those files in future)
-* Please, don't just use some buttons to instantly push, I'm begging you, use also git status to check what files you'r commiting, before commiting
-### After commiting
-* push new branch to github, and open pull request for merging with update branch
+> Data for 29.04.2025, 2:55PM
 
-## Meetings
-* No strict rules. You need something, you ask something
+# Work done
+
+## division of labor
+- [Bejmach (Maciej Bejmowicz)](https://github.com/Bejmach/): Backend
+- [Loter (Hubert Pszybysz)](https://github.com/HPrzybysz): Frontend
+- [Kajmaks (Maksymilian Janicki)](https://github.com/kajmaks): AI to play against
+
+## commits
+- 49 total commits
+- ~15 work on unused things like server or client
+- ~5 readme updates
+
+## Personal commit record
+- [Bejmach (Maciej Bejmowicz)](https://github.com/Bejmach/): 47 (5 readme / 13 unused / 29 used)
+- [Loter (Hubert Pszybysz)](https://github.com/HPrzybysz): 2 (2 unused)
+- [Kajmaks (Maksymilian Janicki)](https://github.com/kajmaks): 0
+> Bejmach: do I even need to comment that
+
+## Whats done
+- Backend with few bugs (Bejmach)
+- Debugging tools to monitor games (Bejmach)
+
+## What was dropped
+- Server to send data to clients using sockets (Bejmach)
+- Client to send data to server using sockets (debugging version) (bejmach)
+- Req/Res translator to translate data to and from chars to readable format (base - Loter, Whole redesign, because nothing worked - Bejmach)
+- Env reader worked on that for like 15 min, so not so big loss (bejmach)
+
+> Bejmach: Req/Res translator in its first version was using something like 0<<7... im rly don't know what to say. Also comments everywhere. looked a lot like gpt or other AI wrote that.
+
+## Component explanation
+
+- GameMaster: Order of the game, holds pointers to logger, players, deck, validator, and special rules (Bejmach)
+- ClientBase: All basic functions to work with deck (Bejmach)
+- Deck: Stores all used and unused cards (Bejmach)
+- logger: Creates a log files in folder logs, if folder exists (Bejmach)
+- validator: Validates, if move can be performed based on game state (Bejmach)
+- special rules: works with special cards like 4, to stop another player, or 2, to give card 
+
+## Game Order
+- Game master starts creates logger, new deck, validator and special rules
+- Players join to game master
+- Game master prepares every player to game (gives them pointers to deck, validator, etc.)
+- Game master starts turn in player 1
+- Player 1 does its turn
+- Player 1 tells player 2, that it is its turn
+- Repeat last 2, until someone won.

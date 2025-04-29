@@ -205,17 +205,17 @@ void ClientPlayer::DrawGameStatus(){
     }
     else{
         if(rules->GetData()[0] != 13){
-            std::cout<<"Current forced card: "<<translate::name::Code(decode::intiger::Name(rules->GetData()[0]))<<std::endl;
+            std::cout<<"Current forced card: "<<translate::name::EN(decode::intiger::Name(rules->GetData()[0]))<<std::endl;
         }
         else if(rules->GetData()[1] != 4){
-            std::cout<<"Current forced card: "<<translate::suit::Code(decode::intiger::Suit(rules->GetData()[1]))<<std::endl;
+            std::cout<<"Current forced card: "<<translate::suit::EN(decode::intiger::Suit(rules->GetData()[1]))<<std::endl;
         }
         else{
-            std::cout<<"Current used card: "<<translate::name::Code(deck->GetLastUsed()->GetName())<<translate::suit::Code(deck->GetLastUsed()->GetSuit())<<std::endl<<std::endl;
+            std::cout<<"Current used card: "<<translate::name::EN(deck->GetLastUsed()->GetName())<<" of "<<translate::suit::EN(deck->GetLastUsed()->GetSuit())<<std::endl<<std::endl;
         }
         std::cout<<"Select card to play"<<std::endl;
         for(int i=0; i<onHand.size(); i++){
-            std::cout<<"    "<<i+1<<": "<<translate::name::Code(onHand[i]->GetName())<<translate::suit::Code(onHand[i]->GetSuit())<<std::endl;
+            std::cout<<"    "<<i+1<<": "<<translate::name::EN(onHand[i]->GetName())<<" of "<<translate::suit::EN(onHand[i]->GetSuit())<<std::endl;
         }
     }
 }
