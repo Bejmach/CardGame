@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 
 namespace SO{
 	std::vector<std::string> Split(std::string str, std::string delimiter);

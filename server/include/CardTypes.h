@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 
 enum class Suits{Heart, Diamond, Club, Spade, Undefined};
 enum class Names{Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King, Ace, Undefined};

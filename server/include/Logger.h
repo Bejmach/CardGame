@@ -6,6 +6,7 @@
 #include <ctime>
 #include <fstream>
 #include <cstdio>
+#include <string>
 
 class Logger{
     private:

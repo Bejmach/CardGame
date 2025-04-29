@@ -6,6 +6,7 @@
 #include <utility>
 
 #include <fstream>
+#include <string>
 
 class EnvReader{
 	private:

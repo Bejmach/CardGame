@@ -2,6 +2,7 @@
 #define CARD_H
 
 #include "CardTypes.h"
+#include <string>
 
 class Card{
 	private:
